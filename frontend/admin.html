@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo | MOVELZA</title>
+
+  <style>
+    :root {
+      --vermelho: #cc0830;
+      --vermelho-escuro: #a50727;
+      --grafite: #171a20;
+      --fundo: #f3f6fa;
+      --borda: #e0e5ec;
+      --texto: #152333;
+      --cinza: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--grafite);
+      color: white;
+      padding: 25px 17px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .marca {
+      padding: 8px 10px 26px;
+      border-bottom: 1px solid #ffffff20;
+      margin-bottom: 22px;
+    }
+
+    .marca img {
+      display: block;
+      width: 195px;
+      max-width: 100%;
+      height: auto;
+      background: white;
+      border-radius: 8px;
+      padding: 7px;
+    }
+
+    .marca small {
+      display: block;
+      margin-top: 12px;
+      color: #c2cad4;
+      letter-spacing: 2px;
+      font-size: 11px;
+    }
+
+    .menu-titulo {
+      color: #a4aab3;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 12px;
+    }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 13px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      color: #d9dce2;
+      font-size: 14px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .menu-link:hover {
+      background: #ffffff15;
+      color: white;
+    }
+
+    .menu-link.ativo {
+      background: var(--vermelho);
+      color: white;
+    }
+
+    .menu-icone {
+      width: 24px;
+      text-align: center;
+      font-size: 19px;
+    }
+
+    .sidebar-rodape {
+      margin-top: auto;
+      border-top: 1px solid #ffffff20;
+      padding: 20px 12px 0;
+      color: #adb7c3;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .principal {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 24px 32px;
+      background: white;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .topbar p {
+      margin: 7px 0 0;
+      color: var(--cinza);
+      font-size: 13px;
+    }
+
+    .ambiente {
+      padding: 10px 14px;
+      border-radius: 30px;
+      background: #fff0f3;
+      color: var(--vermelho);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .conteudo {
+      max-width: 1500px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .boas-vindas {
+      background: linear-gradient(
+        110deg,
+        #171a20 0%,
+        #30202a 55%,
+        #850b24 100%
+      );
+      border-radius: 18px;
+      color: white;
+      padding: 34px;
+      margin-bottom: 28px;
+    }
+
+    .boas-vindas .subtitulo {
+      color: #ff9bad;
+      letter-spacing: 2px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 13px;
+    }
+
+    .boas-vindas h2 {
+      margin: 0 0 12px;
+      font-size: 30px;
+    }
+
+    .boas-vindas h2 span {
+      color: #ff607e;
+    }
+
+    .boas-vindas p {
+      color: #e3e5e9;
+      line-height: 1.7;
+      margin: 0;
+      max-width: 750px;
+    }
+
+    .secao-titulo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .secao-titulo h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .atualizar,
+    .botao-link {
+      display: inline-block;
+      background: white;
+      color: var(--vermelho);
+      border: 1px solid #efd0d7;
+      border-radius: 9px;
+      padding: 11px 15px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .atualizar:hover,
+    .botao-link:hover {
+      background: #fff0f3;
+    }
+
+    .indicadores {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px;
+      margin-bottom: 33px;
+    }
+
+    .indicador {
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 23px;
+      box-shadow: 0 6px 18px #17233009;
+    }
+
+    .indicador-topo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 17px;
+    }
+
+    .indicador-topo span:first-child {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--cinza);
+    }
+
+    .indicador-icone {
+      background: #fff0f3;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 21px;
+    }
+
+    .indicador strong {
+      display: block;
+      color: var(--vermelho);
+      font-size: 35px;
+    }
+
+    .indicador small {
+      display: block;
+      color: #8190a1;
+      font-size: 12px;
+      margin-top: 9px;
+    }
+
+    .atalhos {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 33px;
+    }
+
+    .atalho {
+      display: flex;
+      flex-direction: column;
+      min-height: 205px;
+      padding: 24px;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      transition: 0.2s;
+    }
+
+    .atalho:hover {
+      transform: translateY(-4px);
+      border-color: #f2b5c3;
+      box-shadow: 0 12px 25px #17233015;
+    }
+
+    .atalho-icone {
+      font-size: 29px;
+      margin-bottom: 16px;
+    }
+
+    .atalho h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .atalho p {
+      color: var(--cinza);
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0 0 18px;
+    }
+
+    .atalho .abrir {
+      margin-top: auto;
+      color: var(--vermelho);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .painel {
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+
+    .painel-cabecalho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding: 23px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .painel-cabecalho h2 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .painel-cabecalho p {
+      margin: 0;
+      color: var(--cinza);
+      font-size: 13px;
+    }
+
+    .tabela-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 750px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 16px 19px;
+      border-bottom: 1px solid #edf0f4;
+      font-size: 13px;
+    }
+
+    th {
+      background: #fff3f5;
+      color: #8c3146;
+      font-weight: bold;
+    }
+
+    td strong {
+      color: var(--texto);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .barra {
+      width: 100%;
+      height: 9px;
+      background: #f0e4e8;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .barra span {
+      display: block;
+      height: 100%;
+      background: var(--vermelho);
+      border-radius: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 30px;
+      background: #edf1f5;
+      color: #465569;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .tag.pendente {
+      background: #fff0d5;
+      color: #865600;
+    }
+
+    .tag.aprovada,
+    .tag.confirmada {
+      background: #def7e8;
+      color: #157444;
+    }
+
+    .tag.recusada,
+    .tag.cancelada {
+      background: #ffe5e9;
+      color: #b11e3b;
+    }
+
+    .vazio {
+      padding: 30px;
+      text-align: center;
+      color: var(--cinza);
+    }
+
+    .aviso {
+      padding: 19px;
+      background: #fff8eb;
+      border: 1px solid #f0d9a9;
+      border-radius: 12px;
+      color: #74561e;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 1150px) {
+      .indicadores {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .atalhos {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .app {
+        display: block;
+      }
+
+      .sidebar {
+        width: 100%;
+        padding: 15px;
+      }
+
+      .marca {
+        padding-bottom: 15px;
+        margin-bottom: 10px;
+      }
+
+      .menu {
+        display: flex;
+        overflow-x: auto;
+        gap: 7px;
+      }
+
+      .menu-titulo,
+      .sidebar-rodape {
+        display: none;
+      }
+
+      .menu-link {
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .topbar {
+        padding: 20px;
+      }
+
+      .conteudo {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .indicadores,
+      .atalhos {
+        grid-template-columns: 1fr;
+      }
+
+      .boas-vindas {
+        padding: 24px;
+      }
+
+      .boas-vindas h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+
+    <div class="marca">
+      <a href="index.html">
+        <img
+          src="img/logo-MOVELZA.png"
+          alt="MOVELZA - Locadora de Veículos"
+        >
+      </a>
+      <small>PAINEL ADMINISTRATIVO</small>
+    </div>
+
+    <div class="menu-titulo">Menu principal</div>
+
+    <nav class="menu">
+
+      <a class="menu-link ativo" href="admin.html">
+        <span class="menu-icone">▦</span>
+        Visão geral
+      </a>
+
+      <a class="menu-link" href="estoque.html">
+        <span class="menu-icone">🚗</span>
+        Estoque
+      </a>
+
+      <a class="menu-link" href="reservas-admin.html">
+        <span class="menu-icone">📅</span>
+        Solicitações
+      </a>
+
+      <a class="menu-link" href="veiculos.html">
+        <span class="menu-icone">🗂️</span>
+        Catálogo
+      </a>
+
+      <a class="menu-link" href="index.html">
+        <span class="menu-icone">🌐</span>
+        Site público
+      </a>
+
+    </nav>
+
+    <div class="sidebar-rodape">
+      MOVELZA<br>
+      Sistema de demonstração local<br>
+      Versão de desenvolvimento
+    </div>
+
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="principal">
+
+    <header class="topbar">
+      <div>
+        <h1>Painel Administrativo</h1>
+        <p>Controle geral da locadora MOVELZA</p>
+      </div>
+
+      <span class="ambiente">
+        ● Ambiente de teste
+      </span>
+    </header>
+
+    <main class="conteudo">
+
+      <!-- APRESENTAÇÃO -->
+      <section class="boas-vindas">
+        <div class="subtitulo">
+          MOVELZA • ADMINISTRAÇÃO
+        </div>
+
+        <h2>
+          Gestão inteligente da <span>sua frota.</span>
+        </h2>
+
+        <p>
+          Acompanhe os veículos cadastrados, consulte
+          as solicitações de locação e acesse as ferramentas
+          administrativas da MOVELZA em um único lugar.
+        </p>
+      </section>
+
+      <!-- INDICADORES -->
+      <div class="secao-titulo">
+        <h2>Visão geral</h2>
+
+        <button
+          class="atualizar"
+          id="atualizar"
+          type="button"
+        >
+          ↻ Atualizar dados
+        </button>
+      </div>
+
+      <section class="indicadores">
+
+        <article class="indicador">
+          <div class="indicador-topo">
+            <span>Total de veículos</span>
+            <span class="indicador-icone">🚗</span>
+          </div>
+
+          <strong id="total-veiculos">—</strong>
+          <small>Unidades cadastradas na frota</small>
+        </article>
+
+        <article class="indicador">
+          <div class="indicador-topo">
+            <span>Disponíveis no estoque</span>
+            <span class="indicador-icone">✓</span>
+          </div>
+
+          <strong id="disponiveis">—</strong>
+          <small>Conforme o status de cada veículo</small>
+        </article>
+
+        <article class="indicador">
+          <div class="indicador-topo">
+            <span>Solicitações pendentes</span>
+            <span class="indicador-icone">📋</span>
+          </div>
+
+          <strong id="pendentes">—</strong>
+          <small>Aguardando análise administrativa</small>
+        </article>
+
+        <article class="indicador">
+          <div class="indicador-topo">
+            <span>Aprovações de teste</span>
+            <span class="indicador-icone">📅</span>
+          </div>
+
+          <strong id="aprovadas">—</strong>
+          <small>Não representam reservas reais</small>
+        </article>
+
+      </section>
+
+      <!-- ACESSOS RÁPIDOS -->
+      <div class="secao-titulo">
+        <h2>Acessos rápidos</h2>
+      </div>
+
+      <section class="atalhos">
+
+        <a class="atalho" href="estoque.html">
+          <span class="atalho-icone">🚘</span>
+          <h3>Gerenciar estoque</h3>
+          <p>
+            Consulte as unidades cadastradas e as informações
+            disponíveis sobre a frota.
+          </p>
+          <span class="abrir">Abrir estoque →</span>
+        </a>
+
+        <a class="atalho" href="reservas-admin.html">
+          <span class="atalho-icone">📅</span>
+          <h3>Gerenciar solicitações</h3>
+          <p>
+            Visualize os pedidos recebidos,
+            analise solicitações e confira conflitos
+            de datas.
+          </p>
+          <span class="abrir">Abrir solicitações →</span>
+        </a>
+
+        <a class="atalho" href="veiculos.html">
+          <span class="atalho-icone">🚗</span>
+          <h3>Consultar catálogo</h3>
+          <p>
+            Navegue pelas categorias e confira
+            os modelos disponíveis no site.
+          </p>
+          <span class="abrir">Abrir catálogo →</span>
+        </a>
+
+        <a class="atalho" href="index.html">
+          <span class="atalho-icone">🌐</span>
+          <h3>Visualizar site</h3>
+          <p>
+            Confira a experiência do cliente
+            na página inicial da MOVELZA.
+          </p>
+          <span class="abrir">Abrir site →</span>
+        </a>
+
+        <a
+          class="atalho"
+          href="detalhes.html?categoria=economico&modelo=Fiat%20Mobi"
+        >
+          <span class="atalho-icone">🔎</span>
+          <h3>Testar uma locação</h3>
+          <p>
+            Acesse o Fiat Mobi para testar
+            o fluxo de consulta, simulação
+            e solicitação de reserva.
+          </p>
+          <span class="abrir">Iniciar teste →</span>
+        </a>
+
+        <a
+          class="atalho"
+          href="modelos.html?categoria=eletricos"
+        >
+          <span class="atalho-icone">⚡</span>
+          <h3>Frota elétrica</h3>
+          <p>
+            Consulte os modelos BYD cadastrados
+            na categoria de elétricos.
+          </p>
+          <span class="abrir">Ver elétricos →</span>
+        </a>
+
+      </section>
+
+      <!-- SOLICITAÇÕES RECENTES -->
+      <section class="painel">
+
+        <div class="painel-cabecalho">
+          <div>
+            <h2>Solicitações recentes</h2>
+            <p>
+              Últimas solicitações registradas no MySQL.
+            </p>
+          </div>
+
+          <a
+            class="botao-link"
+            href="reservas-admin.html"
+          >
+            Ver todas →
+          </a>
+        </div>
+
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+            <tr>
+              <th>Protocolo</th>
+              <th>Modelo</th>
+              <th>Unidade</th>
+              <th>Retirada</th>
+              <th>Devolução</th>
+              <th>Total</th>
+              <th>Situação</th>
+            </tr>
+            </thead>
+
+            <tbody id="tabela-solicitacoes"></tbody>
+          </table>
+        </div>
+
+        <div
+          id="sem-solicitacoes"
+          class="vazio"
+          hidden
+        >
+          Nenhuma solicitação registrada.
+        </div>
+
+      </section>
+
+      <!-- DISTRIBUIÇÃO DA FROTA -->
+      <section class="painel">
+
+        <div class="painel-cabecalho">
+          <div>
+            <h2>Distribuição da frota</h2>
+            <p>
+              Quantidade de veículos cadastrados
+              em cada categoria.
+            </p>
+          </div>
+        </div>
+
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Quantidade</th>
+              <th>Disponíveis no estoque</th>
+              <th>Participação na frota</th>
+            </tr>
+            </thead>
+
+            <tbody id="tabela-frota"></tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <!-- AVISO -->
+      <div class="aviso">
+        <strong>Importante:</strong>
+        este painel consulta os dados do MySQL por meio do backend local.
+        Ainda não possui autenticação nem processamento de pagamentos.
+
+        <p>
+          O status "disponível" representa a situação
+          geral do estoque, não a disponibilidade
+          para uma data específica.
+        </p>
+
+        As aprovações exibidas são apenas testes.
+        Não utilize dados pessoais reais neste
+        ambiente de demonstração.
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  (function () {
+    "use strict";
+    const API = "http://localhost:8080/api";
+    const $ = id => document.getElementById(id);
+    const categorias = {
+      economico: "Econômico", hatch: "Hatch", sedan: "Sedan", suv: "SUV",
+      "7lugares": "7 Lugares", picapes: "Picapes", utilitarios: "Utilitários",
+      vans: "Vans", premium: "Premium", eletricos: "Elétricos"
+    };
+    const nomesStatus = {
+      pendente: "Pendente", confirmada: "Confirmada", cancelada: "Cancelada"
+    };
+
+    function moeda(valor) {
+      if (valor == null || valor === "") return "—";
+      const n = Number(valor);
+      return Number.isFinite(n) ? n.toLocaleString("pt-BR", {style: "currency", currency: "BRL"}) : "—";
+    }
+    function data(valor) {
+      if (!valor) return "—";
+      const d = new Date(valor);
+      return Number.isNaN(d.getTime()) ? "—" : d.toLocaleString("pt-BR");
+    }
+    function celula(tr, valor) {
+      const td = document.createElement("td");
+      td.textContent = String(valor ?? "—");
+      tr.appendChild(td);
+      return td;
+    }
+    function status(r) { return String(r.status || "").toLowerCase(); }
+
+    function renderizarVeiculos(veiculos) {
+      $("total-veiculos").textContent = veiculos.length;
+      const disponiveis = veiculos.filter(v => String(v.status || "").toLowerCase() === "disponivel");
+      $("disponiveis").textContent = disponiveis.length;
+      const tabela = $("tabela-frota");
+      tabela.replaceChildren();
+      for (const [chave, nome] of Object.entries(categorias)) {
+        const itens = veiculos.filter(v => String(v.categoria || "").toLowerCase() === chave);
+        const livres = itens.filter(v => String(v.status || "").toLowerCase() === "disponivel");
+        const tr = document.createElement("tr");
+        const tdNome = celula(tr, nome);
+        const strong = document.createElement("strong");
+        strong.textContent = nome;
+        tdNome.replaceChildren(strong);
+        celula(tr, itens.length);
+        celula(tr, livres.length);
+        const tdBarra = celula(tr, "");
+        const barra = document.createElement("div");
+        barra.className = "barra";
+        const preenchimento = document.createElement("span");
+        preenchimento.style.width = (veiculos.length ? 100 * itens.length / veiculos.length : 0) + "%";
+        barra.appendChild(preenchimento);
+        tdBarra.appendChild(barra);
+        tabela.appendChild(tr);
+      }
+    }
+
+    function renderizarReservas(reservas) {
+      $("pendentes").textContent = reservas.filter(r => status(r) === "pendente").length;
+      $("aprovadas").textContent = reservas.filter(r => status(r) === "confirmada").length;
+      const tabela = $("tabela-solicitacoes");
+      tabela.replaceChildren();
+      const recentes = [...reservas].sort((a, b) => (new Date(b.criadoEm).getTime() || 0) - (new Date(a.criadoEm).getTime() || 0)).slice(0, 5);
+      $("sem-solicitacoes").hidden = recentes.length > 0;
+      for (const r of recentes) {
+        const tr = document.createElement("tr");
+        celula(tr, r.id);
+        celula(tr, r.modelo);
+        celula(tr, r.unidade);
+        celula(tr, data(r.retirada));
+        celula(tr, data(r.devolucao));
+        celula(tr, moeda(r.total));
+        const tdStatus = celula(tr, "");
+        const tag = document.createElement("span");
+        const s = status(r);
+        tag.className = "tag " + s;
+        tag.textContent = nomesStatus[s] || r.status || "—";
+        tdStatus.appendChild(tag);
+        tabela.appendChild(tr);
+      }
+    }
+
+    async function obterLista(caminho) {
+      const resposta = await fetch(API + caminho, {cache: "no-store"});
+      if (!resposta.ok) throw new Error("HTTP " + resposta.status + " em " + caminho);
+      const dados = await resposta.json();
+      if (!Array.isArray(dados)) throw new Error("Resposta inesperada em " + caminho);
+      return dados;
+    }
+
+    async function atualizarPainel() {
+      const botao = $("atualizar");
+      botao.disabled = true;
+      try {
+        const [veiculos, reservas] = await Promise.all([
+          obterLista("/veiculos"), obterLista("/reservas")
+        ]);
+        renderizarVeiculos(veiculos);
+        renderizarReservas(reservas);
+      } catch (erro) {
+        console.error("Erro ao consultar MOVELZA:", erro);
+        $("total-veiculos").textContent = "—";
+        $("disponiveis").textContent = "—";
+        $("pendentes").textContent = "—";
+        $("aprovadas").textContent = "—";
+        $("tabela-frota").replaceChildren();
+        $("tabela-solicitacoes").replaceChildren();
+        $("sem-solicitacoes").hidden = false;
+        $("sem-solicitacoes").textContent = "Não foi possível carregar os dados do MySQL. Confira se o backend está ligado.";
+      } finally {
+        botao.disabled = false;
+      }
+    }
+    $("atualizar").addEventListener("click", atualizarPainel);
+    window.addEventListener("focus", atualizarPainel);
+    atualizarPainel();
+  })();
+</script>
+
+</body>
+</html>

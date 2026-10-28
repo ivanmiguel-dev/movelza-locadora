@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simular locação | MOVELZA</title>
+
+  <style>
+    :root {
+      --red: #c9082b;
+      --red-hover: #a80624;
+      --pink: #ff607b;
+      --ink: #101c2a;
+      --muted: #62778b;
+      --border: #dfe6ed;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: var(--ink);
+    }
+
+    a {
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cabecalho {
+      max-width: 1320px;
+      margin: auto;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      width: 215px;
+      height: auto;
+      display: block;
+    }
+
+    .menu-toggle { display: none; border: 1px solid var(--border); border-radius: 9px; background: #fff; color: var(--ink); padding: 11px 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    nav a:hover,
+    nav a.ativo {
+      color: var(--red);
+      text-decoration: none;
+    }
+
+    .nav-botao {
+      background: var(--red);
+      color: #fff;
+      border-radius: 10px;
+      padding: 15px 22px;
+    }
+
+    .nav-botao:hover {
+      background: var(--red-hover);
+      color: #fff;
+    }
+
+    .hero {
+      background: linear-gradient(
+        110deg,
+        #15181e 5%,
+        #30212a 58%,
+        #790f23 100%
+      );
+      color: #fff;
+      padding: 45px 20px;
+    }
+
+    .hero-interno {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .hero .etiqueta {
+      color: #ff8da0;
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4vw, 48px);
+      margin: 12px 0;
+    }
+
+    .hero h1 span { color: var(--pink); }
+
+    .hero p {
+      color: #e8dfe3;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 32px auto 55px;
+      padding: 0 20px;
+    }
+
+    .voltar {
+      display: inline-block;
+      margin-bottom: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    .card {
+      background: #fff;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px #101c2a0a;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin: 8px 0 12px;
+    }
+
+    h2 {
+      font-size: 23px;
+      margin: 0 0 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .destaque {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .campo {
+      display: block;
+      margin: 18px 0;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .campo input,
+    .campo select {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      padding: 13px;
+      border: 1px solid #ccd8e4;
+      border-radius: 9px;
+      font-size: 16px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .campo input:focus,
+    .campo select:focus {
+      outline: 2px solid #f5a4b3;
+      border-color: var(--red);
+    }
+
+    .preco {
+      font-size: 29px;
+      color: var(--red);
+      font-weight: 800;
+      margin: 16px 0;
+    }
+
+    .resumo {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 0;
+      border-bottom: 1px solid #e7edf4;
+    }
+
+    .resumo strong { text-align: right; }
+
+    .total {
+      font-size: 27px;
+      font-weight: 800;
+      color: var(--red);
+      text-align: right;
+    }
+
+    .alerta {
+      background: #fff5e5;
+      border: 1px solid #f5d49d;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .erro {
+      color: #a52323;
+      font-weight: 700;
+      min-height: 20px;
+      line-height: 1.5;
+    }
+
+    .ok { color: #17673b; }
+
+    .linha {
+      font-size: 14px;
+      color: #536a7d;
+      margin: 7px 0;
+      line-height: 1.5;
+    }
+
+    .botao {
+      width: 100%;
+      padding: 15px;
+      background: var(--red);
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .botao:hover:not(:disabled) {
+      background: var(--red-hover);
+    }
+
+    .botao:disabled {
+      background: #a9b7c6;
+      cursor: not-allowed;
+    }
+
+    .foto {
+      width: 100%;
+      border-radius: 12px;
+      max-height: 255px;
+      object-fit: cover;
+      margin-top: 14px;
+    }
+
+    .situacao {
+      padding: 12px;
+      border-radius: 9px;
+      background: #fff0f3;
+      border: 1px solid #f5d8df;
+      margin: 12px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 750px) {
+      .grid { grid-template-columns: 1fr; }
+      .cabecalho { justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      nav { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; }
+      nav.aberto { display: flex; }
+      nav a { display: block; padding: 13px 10px; }
+      nav .nav-botao { text-align: center; margin-top: 6px; }
+      .logo img { width: 190px; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="cabecalho">
+    <a class="logo" href="index.html">
+      <img
+        src="img/logo-MOVELZA.png"
+        alt="MOVELZA - Locadora de Veículos"
+      >
+    </a>
+
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-controls="menu-navegacao" aria-expanded="false">☰ Menu</button>
+    <nav id="menu-navegacao">
+      <a href="index.html">Início</a>
+      <a href="veiculos.html" class="ativo">Veículos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html#contato">Contato</a>
+      <a class="nav-botao" href="veiculos.html">
+        Escolher veículo →
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-interno">
+    <div class="etiqueta">
+      MOVELZA • Sua próxima viagem
+    </div>
+
+    <h1>
+      Simule sua <span>locação.</span>
+    </h1>
+
+    <p>
+      Escolha as datas, consulte os veículos disponíveis
+      e veja seu orçamento.
+    </p>
+  </div>
+</section>
+
+<main>
+  <a class="voltar" id="voltar" href="veiculos.html">
+    ← Voltar aos veículos
+  </a>
+
+  <div class="grid">
+
+    <section class="card">
+      <p class="destaque">Simulação de locação</p>
+
+      <h1 id="modelo">Carregando veículo...</h1>
+      <p class="muted" id="categoria"></p>
+
+      <img
+        id="foto"
+        class="foto"
+        alt="Foto ilustrativa do modelo"
+        hidden
+      >
+
+      <p class="muted">
+        Escolha o período desejado para consultar
+        as unidades disponíveis deste modelo.
+      </p>
+
+      <label class="campo">
+        Retirada
+        <input type="datetime-local" id="retirada">
+      </label>
+
+      <label class="campo">
+        Devolução
+        <input type="datetime-local" id="devolucao">
+      </label>
+
+      <div
+        class="situacao"
+        id="resumo-disponibilidade"
+        aria-live="polite"
+      >
+        Informe as datas para consultar a disponibilidade.
+      </div>
+
+      <label class="campo">
+        Unidade do veículo
+        <select id="unidade" disabled>
+          <option value="">
+            Informe primeiro o período
+          </option>
+        </select>
+      </label>
+
+      <p id="dados-unidade" class="linha"></p>
+      <p class="erro" id="erro" role="alert"></p>
+
+      <p
+        id="mensagem-disponibilidade"
+        class="linha"
+        aria-live="polite"
+      ></p>
+    </section>
+
+    <section class="card">
+      <h2>Seu orçamento</h2>
+
+      <p class="muted">
+        Valor da diária da unidade escolhida:
+      </p>
+
+      <div class="preco" id="diaria">
+        Preço sob consulta
+      </div>
+
+      <div class="resumo">
+        <span>Período</span>
+        <strong id="periodo">—</strong>
+      </div>
+
+      <div class="resumo">
+        <span>Diárias estimadas</span>
+        <strong id="dias">—</strong>
+      </div>
+
+      <div class="resumo">
+        <span>Subtotal estimado</span>
+        <strong id="subtotal">—</strong>
+      </div>
+
+      <div class="resumo">
+        <span>Total estimado</span>
+        <span class="total" id="total">—</span>
+      </div>
+
+      <p class="muted">
+        Cálculo demonstrativo: cada período iniciado
+        de 24 horas conta como uma diária,
+        com mínimo de uma diária.
+      </p>
+
+      <button class="botao" id="continuar" disabled>
+        Continuar para solicitação →
+      </button>
+
+      <div class="alerta">
+        Este orçamento é uma simulação.
+        A disponibilidade é consultada nas solicitações
+        pendentes e confirmadas do MySQL.
+        Nenhuma reserva real é confirmada ou cobrada.
+      </div>
+    </section>
+
+  </div>
+</main>
+
+
+<script>
+  (function () {
+    "use strict";
+
+    const $ = id => document.getElementById(id);
+    const botaoMenu = $("menu-toggle");
+    const menuNavegacao = $("menu-navegacao");
+    botaoMenu.addEventListener("click", () => {
+      const aberto = menuNavegacao.classList.toggle("aberto");
+      botaoMenu.setAttribute("aria-expanded", String(aberto));
+      botaoMenu.textContent = aberto ? "✕ Fechar" : "☰ Menu";
+    });
+    menuNavegacao.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      menuNavegacao.classList.remove("aberto");
+      botaoMenu.setAttribute("aria-expanded", "false");
+      botaoMenu.textContent = "☰ Menu";
+    }));
+
+    const moeda = n =>
+      new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      }).format(n);
+
+    const parametros =
+      new URLSearchParams(window.location.search);
+
+    const modelo = parametros.get("modelo") || "";
+    const categoria = parametros.get("categoria") || "";
+
+    const nomes = {
+      economico: "Econômico",
+      hatch: "Hatch",
+      sedan: "Sedan",
+      suv: "SUV",
+      "7lugares": "7 Lugares",
+      picapes: "Picapes",
+      utilitarios: "Utilitários",
+      vans: "Vans",
+      premium: "Premium",
+      eletricos: "Elétricos"
+    };
+
+    const imagens = {
+      "Fiat Mobi": "economico/fiat-mobi.png",
+      "Renault Kwid": "economico/renault-kwid.png",
+      "Volkswagen Polo": "hatch/volkswagen-polo.png",
+      "Chevrolet Onix Hatch": "hatch/chevrolet-onix.png",
+      "Hyundai HB20": "hatch/hyundai-hb20.png",
+      "Renault Sandero": "hatch/renault-sandero.png",
+      "Chevrolet Onix Plus": "sedan/chevrolet-onix-plus.png",
+      "Volkswagen Virtus": "sedan/volkswagen-virtus.png",
+      "Fiat Cronos": "sedan/fiat-cronos.png",
+      "Hyundai HB20S": "sedan/hyundai-hb20s.png",
+      "Volkswagen T-Cross": "suv/t-cross.png",
+      "Hyundai Creta": "suv/creta.png",
+      "Toyota Corolla Cross": "suv/corolla-cross.png",
+      "Honda HR-V": "suv/hr-v.png",
+      "Toyota SW4": "7lugares/toyota-sw4.png",
+      "Jeep Commander": "7lugares/jeep-commander.png",
+      "Chevrolet Spin": "7lugares/chevrolet-spin.png",
+      "Mitsubishi Outlander": "7lugares/mitsubishi-outlander.png",
+      "Fiat Strada": "picapes/fiat-strada.png",
+      "Chevrolet Montana": "picapes/montana.png",
+      "Fiat Toro": "picapes/toro.png",
+      "Ford Ranger": "picapes/ranger.png",
+      "Toyota Hilux": "picapes/hilux.png",
+      "Chevrolet S10": "picapes/s10.png",
+      "Fiat Fiorino": "utilitarios/fiorino.png",
+      "Renault Kangoo": "utilitarios/kangoo.png",
+      "Peugeot Partner Rapid": "utilitarios/partner-rapid.png",
+      "Renault Master": "vans/renault-master.png",
+      "Fiat Ducato": "vans/fiat-ducato.png",
+      "BMW 320i": "premium/bmw-320i.png",
+      "Mercedes-Benz C 200": "premium/mercedes-c200.png",
+      "Audi A3 Sedan": "premium/audi-a3.png",
+      "Volvo EX30": "premium/volvo-ex30.png",
+      "BMW X1": "premium/bmw-x1.png",
+      "Audi Q3": "premium/audi-q3.png",
+      "BYD Dolphin": "eletricos/byd-dolphin.png",
+      "BYD Song Plus": "eletricos/byd-song-plus.png",
+      "BYD Seal": "eletricos/byd-seal.png",
+      "BYD Yuan Plus": "eletricos/byd-yuan-plus.png",
+      "BYD Dolphin Mini": "eletricos/byd-dolphin-mini.png",
+      "BYD Tan": "eletricos/byd-tan.png",
+      "BYD King": "eletricos/byd-king.png",
+      "BYD Seal U": "eletricos/byd-seal-u.png"
+    };
+
+    $("voltar").href =
+      "modelos.html?categoria=" +
+      encodeURIComponent(categoria || "economico");
+
+    $("modelo").textContent =
+      modelo || "Modelo não informado";
+
+    $("categoria").textContent =
+      nomes[categoria] || categoria;
+
+    if (imagens[modelo]) {
+      $("foto").src = "img/modelos/" + imagens[modelo];
+      $("foto").hidden = false;
+
+      $("foto").onerror = () => {
+        $("foto").hidden = true;
+      };
+    }
+
+    // Disponibilidade consultada diretamente na API MySQL.
+    const API = "http://localhost:8080/api";
+    let unidades = [];
+    let reservas = [];
+    let carregado = false;
+    let versaoConsulta = 0;
+    const normalizar = valor => String(valor ?? "").normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const mesmoModelo = (a, b) => {
+      const x = normalizar(a), y = normalizar(b);
+      return x === y || [
+        ["chevroletonix", "chevroletonixhatch"],
+        ["hyundaihb20", "hyundaihb20hatch"]
+      ].some(([m, n]) => (x === m && y === n) || (x === n && y === m));
+    };
+    const statusLivre = v => normalizar(v.status) === "disponivel";
+    const datas = () => {
+      const inicio = $("retirada").value;
+      const fim = $("devolucao").value;
+      const a = new Date(inicio), b = new Date(fim);
+      if (!inicio || !fim) return { valido:false, motivo:"Informe retirada e devolução." };
+      if (!Number.isFinite(+a) || !Number.isFinite(+b)) return { valido:false, motivo:"Datas inválidas." };
+      if (a <= new Date()) return { valido:false, motivo:"A retirada deve ser no futuro." };
+      if (b <= a) return { valido:false, motivo:"A devolução deve ser posterior à retirada." };
+      return { valido:true, inicio, fim, a, b };
+    };
+    function conflito(v, p) {
+      return reservas.some(r =>
+        String(r.unidade || r.veiculoId || "") === String(v.id) &&
+        ["pendente", "confirmada"].includes(normalizar(r.status)) &&
+        p.a < new Date(r.devolucao) && new Date(r.retirada) < p.b
+      );
+    }
+    function limpar() {
+      $("continuar").disabled = true;
+      $("diaria").textContent = "Preço sob consulta";
+      for (const id of ["periodo", "dias", "subtotal", "total"]) $(id).textContent = "—";
+      $("dados-unidade").textContent = "";
+      $("mensagem-disponibilidade").textContent = "";
+      $("erro").textContent = "";
+    }
+    function renderizar() {
+      const anterior = $("unidade").value;
+      limpar();
+      const seletor = $("unidade");
+      seletor.replaceChildren();
+      seletor.disabled = true;
+      const adicionar = (valor, texto, desativado = false) => {
+        const op = document.createElement("option");
+        op.value = valor; op.textContent = texto; op.disabled = desativado;
+        seletor.appendChild(op);
+      };
+      if (!carregado) {
+        adicionar("", "Consultando MySQL...");
+        $("resumo-disponibilidade").textContent = "Consultando veículos e reservas no MySQL...";
+        return;
+      }
+      const lista = unidades.filter(v =>
+        mesmoModelo(v.modelo, modelo) && normalizar(v.categoria) === normalizar(categoria)
+      );
+      if (!lista.length) {
+        adicionar("", "Nenhuma unidade encontrada");
+        $("resumo-disponibilidade").textContent = "Modelo não encontrado no estoque do MySQL.";
+        return;
+      }
+      const p = datas();
+      if (!p.valido) {
+        adicionar("", "Informe primeiro um período válido");
+        $("resumo-disponibilidade").textContent = "Informe as datas para consultar as unidades.";
+        if ($("retirada").value && $("devolucao").value) $("erro").textContent = p.motivo;
+        return;
+      }
+      const elegiveis = lista.filter(v => statusLivre(v) && Number(v.valorDiaria) > 0);
+      const livres = elegiveis.filter(v => !conflito(v, p));
+      const ocupadas = elegiveis.filter(v => conflito(v, p));
+      const semDiaria = lista.filter(v => statusLivre(v) && !(Number(v.valorDiaria) > 0)).length;
+      const bloqueadas = lista.filter(v => !statusLivre(v)).length;
+      $("resumo-disponibilidade").textContent =
+        `${livres.length} unidade(s) livre(s) · ${ocupadas.length} com reserva no período · ` +
+        `${semDiaria} sem diária · ${bloqueadas} bloqueada(s) no estoque.`;
+      adicionar("", "Selecione uma unidade disponível");
+      for (const v of livres) adicionar(v.id, `${v.id} · ${v.cor} · ${moeda(Number(v.valorDiaria))}/dia`);
+      for (const v of ocupadas) adicionar("", `${v.id} · Ocupada no período`, true);
+      if (!livres.length) {
+        $("erro").textContent = "Não há unidades disponíveis para o período escolhido.";
+        return;
+      }
+      seletor.disabled = false;
+      if (livres.some(v => v.id === anterior)) seletor.value = anterior;
+      mostrarOrcamento();
+    }
+    function mostrarOrcamento() {
+      limpar();
+      const v = unidades.find(x => x.id === $("unidade").value);
+      const p = datas();
+      if (!v || !p.valido || conflito(v,p) || !statusLivre(v) || !(Number(v.valorDiaria) > 0)) return;
+      const dias = Math.max(1, Math.ceil((p.b - p.a) / 86400000));
+      const total = dias * Number(v.valorDiaria);
+      $("diaria").textContent = moeda(Number(v.valorDiaria)) + "/dia";
+      $("dados-unidade").textContent = `${v.id} · ${v.cor} · placa ${v.placa || "pendente"}`;
+      $("periodo").textContent = `${p.a.toLocaleString("pt-BR")} até ${p.b.toLocaleString("pt-BR")}`;
+      $("dias").textContent = String(dias);
+      $("subtotal").textContent = moeda(total);
+      $("total").textContent = moeda(total);
+      $("mensagem-disponibilidade").textContent = "✓ Sem conflito nas reservas pendentes ou confirmadas do MySQL, na última consulta.";
+      $("mensagem-disponibilidade").className = "linha ok";
+      $("continuar").disabled = false;
+    }
+    async function consultar() {
+      const versao = ++versaoConsulta;
+      carregado = false;
+      renderizar();
+      try {
+        const [rv, rr] = await Promise.all([
+          fetch(API + "/veiculos", {cache:"no-store"}),
+          fetch(API + "/reservas", {cache:"no-store"})
+        ]);
+        if (!rv.ok || !rr.ok) throw new Error("A API retornou erro HTTP " + (!rv.ok ? rv.status : rr.status));
+        const [veiculos, solicitacoes] = await Promise.all([rv.json(), rr.json()]);
+        if (!Array.isArray(veiculos) || !Array.isArray(solicitacoes)) throw new Error("Resposta inesperada da API.");
+        if (versao !== versaoConsulta) return;
+        unidades = veiculos;
+        reservas = solicitacoes;
+        carregado = true;
+        renderizar();
+      } catch (e) {
+        if (versao !== versaoConsulta) return;
+        $("unidade").disabled = true;
+        $("continuar").disabled = true;
+        $("resumo-disponibilidade").textContent = "Consulta indisponível.";
+        $("erro").textContent = "Não foi possível consultar o MySQL. Verifique se o backend está ligado. " + e.message;
+      }
+    }
+    $("unidade").addEventListener("change", mostrarOrcamento);
+    for (const id of ["retirada", "devolucao"]) {
+      $(id).addEventListener("change", renderizar);
+      $(id).addEventListener("input", renderizar);
+    }
+    $("continuar").addEventListener("click", async () => {
+      const escolhido = $("unidade").value;
+      await consultar(); // Atualiza o MySQL antes de prosseguir.
+      const v = unidades.find(x => x.id === escolhido);
+      const p = datas();
+      if (!carregado || !v || !p.valido || conflito(v,p) || !statusLivre(v) || !(Number(v.valorDiaria) > 0)) {
+        $("erro").textContent = "A unidade deixou de estar disponível. Selecione outra e tente novamente.";
+        return;
+      }
+      window.location.href = "solicitacao.html?" + new URLSearchParams({
+        categoria, modelo: v.modelo, unidade: v.id,
+        retirada: p.inicio, devolucao: p.fim,
+        diaria: String(Number(v.valorDiaria))
+      });
+    });
+    window.addEventListener("focus", () => { if (document.visibilityState === "visible") consultar(); });
+    consultar();
+
+  })();
+</script>
+
+</body>
+</html>

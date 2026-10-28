@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do veículo | MOVELZA</title>
+
+  <style>
+    :root {
+      --vermelho: #c8102e;
+      --vermelho-escuro: #a60925;
+      --rosa: #ff607b;
+      --grafite: #17191f;
+      --texto: #152235;
+      --cinza: #64748b;
+      --fundo: #f4f7fb;
+      --borda: #e0e7ef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1280px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    /* CABEÇALHO */
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .cabecalho {
+      min-height: 132px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo img {
+      display: block;
+      width: 245px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-size: 15px;
+      font-weight: bold;
+      transition: color .2s;
+    }
+
+    nav a:hover,
+    nav a.ativo {
+      color: var(--vermelho);
+    }
+
+    .botao-menu {
+      display: inline-block;
+      background: var(--vermelho);
+      color: white;
+      padding: 16px 22px;
+      border-radius: 11px;
+      font-weight: bold;
+    }
+
+    .botao-menu:hover {
+      background: var(--vermelho-escuro);
+    }
+
+    .menu-toggle { display: none; border: 1px solid var(--borda); background: white; color: var(--vermelho); border-radius: 10px; padding: 11px 14px; font-weight: bold; cursor: pointer; }
+    .menu-toggle:focus-visible, nav a:focus-visible { outline: 3px solid var(--rosa); outline-offset: 3px; }
+
+    /* BANNER */
+
+    .banner {
+      background:
+        linear-gradient(
+          110deg,
+          #15171d 0%,
+          #29242c 48%,
+          #760e24 100%
+        );
+      color: #fff;
+      padding: 65px 0;
+    }
+
+    .banner-conteudo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .banner .etiqueta {
+      color: #ff8da0;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .banner h1 {
+      font-size: clamp(35px, 4vw, 58px);
+      margin: 18px 0;
+      line-height: 1.1;
+    }
+
+    .banner h1 span {
+      color: var(--rosa);
+    }
+
+    .banner p {
+      color: #e8e9ed;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    .banner-numero {
+      min-width: 200px;
+      padding: 28px;
+      text-align: center;
+      border: 1px solid #ffffff45;
+      background: #ffffff12;
+      border-radius: 18px;
+    }
+
+    .banner-numero strong {
+      display: block;
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .banner-numero small {
+      color: #f4dbe0;
+    }
+
+    /* CONTEÚDO */
+
+    main {
+      padding-top: 35px;
+      padding-bottom: 70px;
+    }
+
+    .voltar {
+      display: inline-block;
+      color: var(--vermelho);
+      font-weight: bold;
+      margin-bottom: 28px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .foto,
+    .informacoes,
+    .unidades {
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 24px #1723300a;
+    }
+
+    .foto img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 14px;
+      background: #eef2f7;
+    }
+
+    .sem-foto {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      text-align: center;
+      padding: 30px;
+      background: #f0f3f7;
+      color: var(--cinza);
+      border-radius: 14px;
+    }
+
+    .etiqueta-modelo {
+      display: inline-block;
+      color: var(--vermelho);
+      background: #fff0f3;
+      border-radius: 50px;
+      padding: 9px 14px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .informacoes h2 {
+      font-size: clamp(28px, 3vw, 38px);
+      margin: 18px 0 10px;
+    }
+
+    .muted {
+      color: var(--cinza);
+      line-height: 1.7;
+    }
+
+    .preco {
+      font-size: 29px;
+      font-weight: bold;
+      color: var(--vermelho);
+      margin: 25px 0 8px;
+    }
+
+    .dados {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 25px 0;
+    }
+
+    .dados div {
+      padding: 16px;
+      background: #f5f7fa;
+      border: 1px solid #eef1f5;
+      border-radius: 12px;
+    }
+
+    .dados small {
+      display: block;
+      color: var(--cinza);
+      margin-bottom: 8px;
+    }
+
+    .dados strong {
+      overflow-wrap: anywhere;
+    }
+
+    .botao {
+      display: inline-block;
+      background: var(--vermelho);
+      color: white;
+      padding: 17px 25px;
+      border-radius: 11px;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .botao:hover:not(:disabled) {
+      background: var(--vermelho-escuro);
+    }
+
+    .botao:disabled {
+      background: #a9b4c1;
+      cursor: not-allowed;
+    }
+
+    .botao-reserva {
+      width: 100%;
+    }
+
+    .aviso {
+      margin-top: 20px;
+      padding: 16px;
+      background: #fff8e9;
+      border: 1px solid #f0dfb6;
+      border-radius: 12px;
+      line-height: 1.6;
+      color: #725420;
+      font-size: 14px;
+    }
+
+    /* UNIDADES */
+
+    .unidades {
+      margin-top: 30px;
+    }
+
+    .unidades h2 {
+      margin-top: 0;
+      font-size: 26px;
+    }
+
+    .unidade {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      border-top: 1px solid var(--borda);
+      padding: 18px 0;
+    }
+
+    .unidade-descricao {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .unidade-descricao small {
+      color: var(--cinza);
+    }
+
+    .unidade-situacao {
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    .unidade-situacao strong {
+      display: block;
+      color: var(--vermelho);
+    }
+
+    .erro {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid var(--borda);
+    }
+
+    footer {
+      background: var(--grafite);
+      color: #cbd5e1;
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 14px;
+    }
+
+    /* CELULAR */
+
+    @media (max-width: 850px) {
+      .cabecalho { min-height: 76px; padding: 10px 0; flex-wrap: wrap; gap: 10px; }
+      .logo img { width: 170px; }
+      .menu-toggle { display: inline-block; margin-left: auto; }
+      nav { display: none; flex-basis: 100%; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 0 12px; }
+      nav.aberto { display: flex; }
+      nav a { padding: 12px; border-top: 1px solid var(--borda); }
+      nav a.botao-menu { text-align: center; margin-top: 8px; }
+
+      .banner-conteudo {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .banner-numero {
+        width: 100%;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: calc(100% - 28px);
+      }
+
+      .logo img { width: 165px; }
+
+      .banner {
+        padding: 45px 0;
+      }
+
+      .dados {
+        grid-template-columns: 1fr;
+      }
+
+      .foto,
+      .informacoes,
+      .unidades {
+        padding: 17px;
+      }
+
+      .unidade-situacao {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container cabecalho">
+
+    <div class="logo">
+      <a href="index.html">
+        <img
+          src="img/logo-MOVELZA.png"
+          alt="MOVELZA - Locadora de Veículos"
+        >
+      </a>
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-controls="menu-navegacao" aria-expanded="false">☰ Menu</button>
+    <nav id="menu-navegacao">
+      <a href="index.html">Início</a>
+      <a href="veiculos.html" class="ativo">Veículos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="veiculos.html" class="botao-menu">
+        Escolher veículo →
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+<section class="banner">
+  <div class="container banner-conteudo">
+
+    <div>
+      <div class="etiqueta">
+        MOVELZA • DETALHES DO VEÍCULO
+      </div>
+
+      <h1>
+        Conheça seu <span>próximo carro.</span>
+      </h1>
+
+      <p>
+        Confira os detalhes do modelo e consulte
+        as opções disponíveis para sua reserva.
+      </p>
+    </div>
+
+    <div class="banner-numero">
+      <strong id="quantidade-banner">—</strong>
+      <small>Unidades deste modelo na frota</small>
+    </div>
+
+  </div>
+</section>
+
+<main class="container">
+
+  <a class="voltar" id="voltar" href="veiculos.html">
+    ← Voltar aos modelos
+  </a>
+
+  <div id="conteudo"></div>
+
+</main>
+
+<footer>
+  © 2026 MOVELZA — Locadora de Veículos.
+  Projeto demonstrativo.
+</footer>
+
+<script src="estoque.js"></script>
+
+<script>
+  (function () {
+    "use strict";
+
+    const menuBotao = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-navegacao");
+    menuBotao.addEventListener("click", () => {
+      const aberto = menu.classList.toggle("aberto");
+      menuBotao.setAttribute("aria-expanded", String(aberto));
+      menuBotao.textContent = aberto ? "✕ Fechar" : "☰ Menu";
+    });
+    menu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      menu.classList.remove("aberto");
+      menuBotao.setAttribute("aria-expanded", "false");
+      menuBotao.textContent = "☰ Menu";
+    }));
+
+    const nomes = {
+      economico: "Econômico", hatch: "Hatch", sedan: "Sedan", suv: "SUV",
+      "7lugares": "7 Lugares", picapes: "Picapes", utilitarios: "Utilitários",
+      vans: "Vans", premium: "Premium", eletricos: "Elétricos"
+    };
+
+    const imagens = {
+      "Fiat Mobi": "economico/fiat-mobi.png",
+      "Renault Kwid": "economico/renault-kwid.png",
+      "Volkswagen Polo": "hatch/volkswagen-polo.png",
+      "Chevrolet Onix Hatch": "hatch/chevrolet-onix.png",
+      "Hyundai HB20": "hatch/hyundai-hb20.png",
+      "Renault Sandero": "hatch/renault-sandero.png",
+      "Chevrolet Onix Plus": "sedan/chevrolet-onix-plus.png",
+      "Volkswagen Virtus": "sedan/volkswagen-virtus.png",
+      "Fiat Cronos": "sedan/fiat-cronos.png",
+      "Hyundai HB20S": "sedan/hyundai-hb20s.png",
+      "Volkswagen T-Cross": "suv/t-cross.png",
+      "Hyundai Creta": "suv/creta.png",
+      "Toyota Corolla Cross": "suv/corolla-cross.png",
+      "Honda HR-V": "suv/hr-v.png",
+      "Toyota SW4": "7lugares/toyota-sw4.png",
+      "Jeep Commander": "7lugares/jeep-commander.png",
+      "Chevrolet Spin": "7lugares/chevrolet-spin.png",
+      "Mitsubishi Outlander": "7lugares/mitsubishi-outlander.png",
+      "Fiat Strada": "picapes/fiat-strada.png",
+      "Chevrolet Montana": "picapes/montana.png",
+      "Fiat Toro": "picapes/toro.png",
+      "Ford Ranger": "picapes/ranger.png",
+      "Toyota Hilux": "picapes/hilux.png",
+      "Chevrolet S10": "picapes/s10.png",
+      "Fiat Fiorino": "utilitarios/fiorino.png",
+      "Renault Kangoo": "utilitarios/kangoo.png",
+      "Peugeot Partner Rapid": "utilitarios/partner-rapid.png",
+      "Renault Master": "vans/renault-master.png",
+      "Fiat Ducato": "vans/fiat-ducato.png",
+      "BMW 320i": "premium/bmw-320i.png",
+      "Mercedes-Benz C 200": "premium/mercedes-c200.png",
+      "Audi A3 Sedan": "premium/audi-a3.png",
+      "Volvo EX30": "premium/volvo-ex30.png",
+      "BMW X1": "premium/bmw-x1.png",
+      "Audi Q3": "premium/audi-q3.png",
+      "BYD Dolphin": "eletricos/byd-dolphin.png",
+      "BYD Song Plus": "eletricos/byd-song-plus.png",
+      "BYD Seal": "eletricos/byd-seal.png",
+      "BYD Yuan Plus": "eletricos/byd-yuan-plus.png",
+      "BYD Dolphin Mini": "eletricos/byd-dolphin-mini.png",
+      "BYD Tan": "eletricos/byd-tan.png",
+      "BYD King": "eletricos/byd-king.png",
+      "BYD Seal U": "eletricos/byd-seal-u.png"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const modelo = params.get("modelo") || "";
+    const categoria = params.get("categoria") || "";
+    const alvo = document.getElementById("conteudo");
+    const quantidadeBanner = document.getElementById("quantidade-banner");
+    const voltar = document.getElementById("voltar");
+    voltar.href = "modelos.html?categoria=" + encodeURIComponent(categoria || "economico");
+
+    const dinheiro = valor => Number(valor).toLocaleString("pt-BR", {
+      style: "currency", currency: "BRL"
+    });
+    function elemento(tag, classe, texto) {
+      const el = document.createElement(tag);
+      if (classe) el.className = classe;
+      if (texto !== undefined) el.textContent = texto;
+      return el;
+    }
+    function normalizar(valor) {
+      return String(valor ?? "").normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+    function mesmoModelo(nomeBanco, nomeCatalogo) {
+      const a = normalizar(nomeBanco), b = normalizar(nomeCatalogo);
+      if (a === b) return true;
+      const apelidos = [
+        ["chevroletonix", "chevroletonixhatch"],
+        ["hyundaihb20", "hyundaihb20hatch"]
+      ];
+      return apelidos.some(([x,y]) => (a === x && b === y) || (a === y && b === x));
+    }
+    function disponivel(v) {
+      return normalizar(v.status) === "disponivel";
+    }
+    function precoValido(v) {
+      const valor = Number(v.valorDiaria);
+      return Number.isFinite(valor) && valor > 0;
+    }
+    function textoStatus(status) {
+      const s = normalizar(status);
+      if (s === "disponivel") return "Disponível no estoque";
+      if (s === "reservado") return "Reservado no estoque";
+      if (s === "manutencao") return "Em manutenção";
+      return status || "Status não informado";
+    }
+    function mostrarErro(texto) {
+      alvo.replaceChildren(elemento("div", "erro", texto));
+      quantidadeBanner.textContent = "0";
+    }
+
+    async function carregarDetalhes() {
+      if (!modelo) {
+        mostrarErro("Modelo não informado. Volte ao catálogo e escolha um veículo.");
+        return;
+      }
+      alvo.replaceChildren(elemento("div", "erro", "Carregando informações do estoque..."));
+      try {
+        const resposta = await fetch("http://localhost:8080/api/veiculos", {cache: "no-store"});
+        if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+        const estoque = await resposta.json();
+        if (!Array.isArray(estoque)) throw new Error("Resposta inesperada da API");
+        const unidades = estoque.filter(v =>
+          mesmoModelo(v.modelo, modelo) && (!categoria || normalizar(v.categoria) === normalizar(categoria))
+        );
+        if (!unidades.length) {
+          mostrarErro("Modelo não encontrado no MySQL. Volte ao catálogo e escolha um veículo.");
+          return;
+        }
+        const exemplo = unidades[0];
+        const categoriaAtual = categoria || exemplo.categoria;
+        voltar.href = "modelos.html?categoria=" + encodeURIComponent(categoriaAtual);
+        quantidadeBanner.textContent = String(unidades.length);
+        document.title = modelo + " | MOVELZA";
+
+        const disponiveis = unidades.filter(disponivel);
+        const precos = disponiveis.filter(precoValido).map(v => Number(v.valorDiaria));
+        const menor = precos.length ? Math.min(...precos) : null;
+        const layout = elemento("div", "layout");
+        const foto = elemento("section", "foto");
+        const info = elemento("section", "informacoes");
+        const arquivo = imagens[modelo];
+        if (arquivo) {
+          const img = elemento("img");
+          img.src = "img/modelos/" + arquivo;
+          img.alt = "Foto ilustrativa: " + modelo;
+          img.onerror = () => img.replaceWith(elemento("div", "sem-foto", "Foto indisponível. Confira o arquivo da imagem."));
+          foto.appendChild(img);
+        } else {
+          foto.appendChild(elemento("div", "sem-foto", "Foto não cadastrada para este modelo."));
+        }
+        foto.appendChild(elemento("p", "muted", "Imagem ilustrativa. Cor e versão dependem da unidade selecionada."));
+        info.appendChild(elemento("span", "etiqueta-modelo", nomes[categoriaAtual] || categoriaAtual));
+        info.appendChild(elemento("h2", "", modelo));
+        info.appendChild(elemento("p", "muted", unidades.length +
+          " veículos cadastrados neste modelo · " + disponiveis.length + " com status disponível no estoque."));
+        info.appendChild(elemento("div", "preco", menor === null ?
+          "Preço sob consulta" : "A partir de " + dinheiro(menor) + "/dia"));
+        info.appendChild(elemento("p", "muted", menor === null ?
+          "Nenhuma unidade disponível possui diária válida cadastrada." :
+          "O valor final será calculado conforme a unidade escolhida e o período da locação."));
+        const dados = elemento("div", "dados");
+        function valoresUnicos(campo) {
+          const valores = unidades.map(v => v[campo]).filter(v => v !== undefined && v !== null && v !== "");
+          return [...new Set(valores)].join(", ") || "Não informado";
+        }
+        const campos = [
+          ["Categoria", nomes[categoriaAtual] || categoriaAtual],
+          ["Combustíveis", valoresUnicos("combustivel")],
+          ["Cores disponíveis na frota", valoresUnicos("cor")],
+          ["Unidades disponíveis no estoque", disponiveis.length + " de " + unidades.length]
+        ];
+        campos.forEach(([rotulo, valor]) => {
+          const div = elemento("div");
+          div.append(elemento("small", "", rotulo), elemento("strong", "", valor));
+          dados.appendChild(div);
+        });
+        info.appendChild(dados);
+        const botao = elemento("button", "botao botao-reserva", "Consultar disponibilidade e reservar →");
+        botao.disabled = menor === null;
+        botao.addEventListener("click", () => {
+          window.location.href = "reserva.html?" + new URLSearchParams({categoria: categoriaAtual, modelo}).toString();
+        });
+        info.appendChild(botao);
+        info.appendChild(elemento("div", "aviso", menor === null ?
+          "A consulta ainda não está disponível porque nenhuma unidade com status disponível possui diária válida." :
+          "Na próxima etapa, informe as datas da locação. A disponibilidade será consultada considerando as reservas pendentes e confirmadas no sistema."));
+        layout.append(foto, info);
+        const secao = elemento("section", "unidades");
+        secao.appendChild(elemento("h2", "", "Unidades cadastradas"));
+        secao.appendChild(elemento("p", "muted", "Confira as características, a situação cadastral e a diária de cada unidade da frota. A disponibilidade para datas específicas é verificada na reserva."));
+        unidades.forEach(v => {
+          const linha = elemento("div", "unidade");
+          const descricao = elemento("div", "unidade-descricao");
+          descricao.appendChild(elemento("strong", "", v.id + " · " + modelo));
+          descricao.appendChild(elemento("small", "", "Cor: " + (v.cor || "Não informada") +
+            " · Combustível: " + (v.combustivel || "Não informado")));
+          descricao.appendChild(elemento("small", "", "Placa: " + (v.placa || "Não informada")));
+          const situacao = elemento("div", "unidade-situacao");
+          situacao.appendChild(elemento("strong", "", precoValido(v) ? dinheiro(v.valorDiaria) + "/dia" : "Diária pendente"));
+          situacao.appendChild(elemento("small", "", textoStatus(v.status)));
+          linha.append(descricao, situacao);
+          secao.appendChild(linha);
+        });
+        alvo.replaceChildren(layout, secao);
+        console.log("MOVELZA: detalhes carregados do MySQL", {modelo, unidades: unidades.length});
+      } catch (erro) {
+        mostrarErro("Não foi possível consultar o estoque no MySQL. Verifique se o backend está ligado e atualize a página.");
+        console.error("MOVELZA: erro ao carregar detalhes", erro);
+      }
+    }
+    carregarDetalhes();
+  })();
+</script>
+
+</body>
+</html>

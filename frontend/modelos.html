@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelos | MOVELZA</title>
+
+  <style>
+    :root {
+      --vermelho: #C8102E;
+      --vermelho-escuro: #A80D26;
+      --rosa: #FF6479;
+      --grafite: #171A20;
+      --texto: #1D3040;
+      --cinza: #687B8C;
+      --fundo: #F5F7FA;
+      --borda: #E0E6ED;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    /* CABEÇALHO */
+
+    header {
+      background: #FFFFFF;
+      box-shadow: 0 2px 18px rgba(16, 36, 58, 0.07);
+    }
+
+    .cabecalho {
+      min-height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      display: none;
+      color: var(--vermelho);
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--texto);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 0;
+    }
+
+    nav a:hover,
+    nav a.ativo {
+      color: var(--vermelho);
+    }
+
+    nav a.nav-destaque {
+      background: var(--vermelho);
+      color: #FFFFFF;
+      padding: 14px 20px;
+      border-radius: 10px;
+    }
+
+    nav a.nav-destaque:hover {
+      background: var(--vermelho-escuro);
+    }
+
+    /* MENU COMPACTO NO CELULAR */
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--borda);
+      background: #FFFFFF;
+      color: var(--vermelho);
+      border-radius: 11px;
+      padding: 11px 14px;
+      font: 700 14px Arial, Helvetica, sans-serif;
+      cursor: pointer;
+    }
+    .menu-icone { display: flex; flex-direction: column; gap: 4px; width: 19px; }
+    .menu-icone span { display: block; height: 2px; background: var(--vermelho); border-radius: 2px; }
+    .menu-toggle[aria-expanded="true"] .menu-icone span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-icone span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] .menu-icone span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* BANNER */
+
+    .banner {
+      background: linear-gradient(
+        115deg,
+        #14171D 0%,
+        #29242B 52%,
+        #831126 100%
+      );
+      padding: 58px 0;
+      color: #FFFFFF;
+    }
+
+    .banner-etiqueta {
+      display: block;
+      color: #FF9AA9;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    .banner h1 {
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.15;
+      margin: 0 0 18px;
+    }
+
+    .banner h1 span {
+      color: var(--rosa);
+    }
+
+    .banner p {
+      color: #E8DDE0;
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 750px;
+      margin: 0;
+    }
+
+    /* PÁGINA */
+
+    .pagina-modelos {
+      padding: 45px 0 85px;
+    }
+
+    .voltar-modelos {
+      display: inline-flex;
+      align-items: center;
+      color: var(--vermelho);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .voltar-modelos:hover {
+      text-decoration: underline;
+    }
+
+    .titulo-secao {
+      margin-bottom: 30px;
+    }
+
+    .titulo-secao h2 {
+      font-size: 31px;
+      margin: 0 0 10px;
+      color: var(--grafite);
+    }
+
+    .titulo-secao p {
+      color: var(--cinza);
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* CARDS */
+
+    .grade-modelos {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .modelo-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: #FFFFFF;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .modelo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(60, 20, 30, 0.12);
+    }
+
+    .foto-modelo {
+      display: block;
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      background: #EEF1F5;
+    }
+
+    .foto-indisponivel {
+      display: none;
+      height: 225px;
+      background: #EEF1F5;
+      color: #687B8C;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      font-weight: 700;
+    }
+
+    .conteudo-card {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 24px;
+    }
+
+    .modelo-card h3 {
+      font-size: 22px;
+      color: var(--grafite);
+      margin: 0 0 14px;
+    }
+
+    .quantidade {
+      display: inline-block;
+      width: fit-content;
+      background: #FFF0F2;
+      color: var(--vermelho);
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .informacoes {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px;
+      color: var(--cinza);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .informacoes strong {
+      color: var(--texto);
+    }
+
+    .preco {
+      margin-top: auto;
+      padding: 16px 0 20px;
+      border-top: 1px solid var(--borda);
+    }
+
+    .preco-label {
+      display: block;
+      color: var(--cinza);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .preco-valor {
+      color: var(--vermelho);
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .preco-valor small {
+      color: var(--cinza);
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .preco-consulta {
+      font-size: 18px;
+    }
+
+    .botao {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 15px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--vermelho);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .botao:hover {
+      background: var(--vermelho-escuro);
+    }
+
+    .aviso-modelos {
+      padding: 30px;
+      background: #FFFFFF;
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      color: var(--cinza);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    /* RODAPÉ */
+
+    footer {
+      background: var(--grafite);
+      color: #FFFFFF;
+      padding: 40px 0 22px;
+    }
+
+    .rodape {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .rodape strong {
+      font-size: 20px;
+    }
+
+    .rodape p {
+      color: #B5C0CB;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .copyright {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      color: #9FAAB7;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* RESPONSIVIDADE */
+
+    @media (max-width: 1050px) {
+      .grade-modelos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 750px) {
+      .cabecalho {
+        min-height: 76px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 9px 0;
+      }
+      .logo img { width: 165px; height: 58px; }
+      .logo-fallback { font-size: 25px; }
+      .menu-toggle { display: inline-flex; }
+      nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        padding: 12px 0 5px;
+        border-top: 1px solid var(--borda);
+        margin-top: 9px;
+      }
+      nav.aberto { display: flex; }
+      nav a { display: flex; width: 100%; padding: 14px 15px; font-size: 15px; border-radius: 9px; }
+      nav a:hover, nav a.ativo { background: #FFF0F2; }
+      nav a.nav-destaque { justify-content: center; margin-top: 5px; }
+
+      .banner {
+        padding: 45px 0;
+      }
+
+      .pagina-modelos {
+        padding: 35px 0 60px;
+      }
+
+      .grade-modelos {
+        grid-template-columns: 1fr;
+      }
+
+      .foto-modelo,
+      .foto-indisponivel {
+        height: 230px;
+      }
+
+      .rodape {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- CABEÇALHO -->
+
+<header>
+  <div class="container cabecalho">
+
+    <a class="logo" href="index.html">
+      <img
+        src="img/logo-MOVELZA.png"
+        alt="MOVELZA - Locadora de Veículos"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+      >
+      <span class="logo-fallback">MOVELZA</span>
+    </a>
+
+    <button type="button" class="menu-toggle" id="menu-toggle"
+            aria-label="Abrir menu de navegação" aria-controls="menu-principal"
+            aria-expanded="false">
+      <span class="menu-icone" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span id="menu-texto">Menu</span>
+    </button>
+
+    <nav id="menu-principal" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="veiculos.html" class="ativo">Veículos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="veiculos.html" class="nav-destaque">
+        Escolher veículo →
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+<!-- BANNER -->
+
+<section class="banner">
+  <div class="container">
+
+    <span class="banner-etiqueta">
+      MOVELZA • NOSSA FROTA
+    </span>
+
+    <h1 id="titulo-categoria">
+      Conheça nossos <span>modelos.</span>
+    </h1>
+
+    <p id="descricao-categoria">
+      Escolha o modelo ideal para sua viagem.
+    </p>
+
+  </div>
+</section>
+
+<!-- CONTEÚDO -->
+
+<main class="container pagina-modelos">
+
+  <a class="voltar-modelos" href="veiculos.html">
+    ← Voltar às categorias
+  </a>
+
+  <div class="titulo-secao">
+    <h2>Modelos disponíveis na categoria</h2>
+    <p>
+      Confira os veículos, compare as opções
+      e consulte os detalhes de cada modelo.
+    </p>
+  </div>
+
+  <div class="grade-modelos" id="lista-modelos"></div>
+
+  <div
+    class="aviso-modelos"
+    id="aviso-modelos"
+    hidden>
+  </div>
+
+</main>
+
+<!-- RODAPÉ -->
+
+<footer>
+  <div class="container">
+
+    <div class="rodape">
+      <div>
+        <strong>MOVELZA</strong>
+        <p>
+          Locadora de veículos • Vá mais longe.
+        </p>
+      </div>
+
+      <p>
+        10 categorias • 220 veículos cadastrados
+      </p>
+    </div>
+
+    <div class="copyright">
+      © 2026 MOVELZA • Projeto demonstrativo de locação de veículos.
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const botao = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-principal");
+    const texto = document.getElementById("menu-texto");
+    if (!botao || !menu) return;
+    function definirAberto(aberto) {
+      menu.classList.toggle("aberto", aberto);
+      botao.setAttribute("aria-expanded", String(aberto));
+      botao.setAttribute("aria-label", aberto ? "Fechar menu de navegação" : "Abrir menu de navegação");
+      if (texto) texto.textContent = aberto ? "Fechar" : "Menu";
+    }
+    botao.addEventListener("click", () => definirAberto(botao.getAttribute("aria-expanded") !== "true"));
+    menu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => definirAberto(false)));
+    document.addEventListener("keydown", evento => { if (evento.key === "Escape") definirAberto(false); });
+    window.addEventListener("resize", () => { if (window.innerWidth > 750) definirAberto(false); });
+  })();
+
+  // O MySQL, consultado pela API, é a fonte dos dados de estoque e preços.
+  // O catálogo abaixo fornece os nomes e os caminhos das fotos existentes.
+  const categorias = {
+    economico: {
+      nome: "Econômico",
+      modelos: [
+        ["Fiat Mobi", 10, "img/modelos/economico/fiat-mobi.png"],
+        ["Renault Kwid", 10, "img/modelos/economico/renault-kwid.png"]
+      ]
+    },
+
+    hatch: {
+      nome: "Hatch",
+      modelos: [
+        ["Volkswagen Polo", 5, "img/modelos/hatch/volkswagen-polo.png"],
+        ["Chevrolet Onix Hatch", 5, "img/modelos/hatch/chevrolet-onix.png"],
+        ["Hyundai HB20", 5, "img/modelos/hatch/hyundai-hb20.png"],
+        ["Renault Sandero", 5, "img/modelos/hatch/renault-sandero.png"]
+      ]
+    },
+
+    sedan: {
+      nome: "Sedan",
+      modelos: [
+        ["Chevrolet Onix Plus", 5, "img/modelos/sedan/chevrolet-onix-plus.png"],
+        ["Volkswagen Virtus", 5, "img/modelos/sedan/volkswagen-virtus.png"],
+        ["Fiat Cronos", 5, "img/modelos/sedan/fiat-cronos.png"],
+        ["Hyundai HB20S", 5, "img/modelos/sedan/hyundai-hb20s.png"]
+      ]
+    },
+
+    suv: {
+      nome: "SUV",
+      modelos: [
+        ["Volkswagen T-Cross", 5, "img/modelos/suv/t-cross.png"],
+        ["Hyundai Creta", 5, "img/modelos/suv/creta.png"],
+        ["Toyota Corolla Cross", 5, "img/modelos/suv/corolla-cross.png"],
+        ["Honda HR-V", 5, "img/modelos/suv/hr-v.png"]
+      ]
+    },
+
+    "7lugares": {
+      nome: "7 Lugares",
+      modelos: [
+        ["Toyota SW4", 5, "img/modelos/7lugares/toyota-sw4.png"],
+        ["Jeep Commander", 5, "img/modelos/7lugares/jeep-commander.png"],
+        ["Chevrolet Spin", 5, "img/modelos/7lugares/chevrolet-spin.png"],
+        ["Mitsubishi Outlander", 5, "img/modelos/7lugares/mitsubishi-outlander.png"]
+      ]
+    },
+
+    picapes: {
+      nome: "Picapes",
+      modelos: [
+
+        ["Fiat Strada", 5, "img/modelos/picapes/fiat-strada.png"],
+        ["Chevrolet Montana", 5, "img/modelos/picapes/montana.png"],
+        ["Fiat Toro", 5, "img/modelos/picapes/toro.png"],
+        ["Ford Ranger", 5, "img/modelos/picapes/ranger.png"],
+        ["Toyota Hilux", 5, "img/modelos/picapes/hilux.png"],
+        ["Chevrolet S10", 5, "img/modelos/picapes/s10.png"]
+      ]
+    },
+
+    utilitarios: {
+      nome: "Utilitários",
+      modelos: [
+        ["Fiat Fiorino", 10, "img/modelos/utilitarios/fiorino.png"],
+        ["Renault Kangoo", 5, "img/modelos/utilitarios/kangoo.png"],
+        ["Peugeot Partner Rapid", 5, "img/modelos/utilitarios/partner-rapid.png"]
+      ]
+    },
+
+    vans: {
+      nome: "Vans",
+      modelos: [
+        ["Renault Master", 5, "img/modelos/vans/renault-master.png"],
+        ["Fiat Ducato", 5, "img/modelos/vans/fiat-ducato.png"]
+      ]
+    },
+
+    premium: {
+      nome: "Premium",
+      modelos: [
+        ["BMW 320i", 4, "img/modelos/premium/bmw-320i.png"],
+        ["Mercedes-Benz C 200", 4, "img/modelos/premium/mercedes-c200.png"],
+        ["Audi A3 Sedan", 3, "img/modelos/premium/audi-a3.png"],
+        ["Volvo EX30", 3, "img/modelos/premium/volvo-ex30.png"],
+        ["BMW X1", 3, "img/modelos/premium/bmw-x1.png"],
+        ["Audi Q3", 3, "img/modelos/premium/audi-q3.png"]
+      ]
+    },
+
+    eletricos: {
+      nome: "Elétricos BYD",
+      modelos: [
+        ["BYD Dolphin", 5, "img/modelos/eletricos/byd-dolphin.png"],
+        ["BYD Song Plus", 5, "img/modelos/eletricos/byd-song-plus.png"],
+        ["BYD Seal", 5, "img/modelos/eletricos/byd-seal.png"],
+        ["BYD Yuan Plus", 5, "img/modelos/eletricos/byd-yuan-plus.png"],
+        ["BYD Dolphin Mini", 5, "img/modelos/eletricos/byd-dolphin-mini.png"],
+        ["BYD Tan", 5, "img/modelos/eletricos/byd-tan.png"],
+        ["BYD King", 5, "img/modelos/eletricos/byd-king.png"],
+        ["BYD Seal U", 5, "img/modelos/eletricos/byd-seal-u.png"]
+      ]
+    }
+  };
+
+
+  function normalizar(valor) {
+    return String(valor ?? "").normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+  }
+
+  function mesmoModelo(nomeBanco, nomeCatalogo) {
+    const a = normalizar(nomeBanco);
+    const b = normalizar(nomeCatalogo);
+    if (a === b) return true;
+    const apelidos = [
+      ["chevroletonix", "chevroletonixhatch"],
+      ["hyundaihb20", "hyundaihb20hatch"]
+    ];
+    return apelidos.some(([x, y]) => (a === x && b === y) || (a === y && b === x));
+  }
+
+  function formatarMoeda(valor) {
+    return new Intl.NumberFormat("pt-BR", {style: "currency", currency: "BRL"}).format(valor);
+  }
+
+  function obterPreco(veiculo) {
+    const valor = Number(veiculo.valorDiaria);
+    return Number.isFinite(valor) && valor > 0 ? valor : 0;
+  }
+
+  const parametros = new URLSearchParams(window.location.search);
+  const categoriaSelecionada = parametros.get("categoria") || "economico";
+  const categoria = categorias[categoriaSelecionada];
+  const titulo = document.getElementById("titulo-categoria");
+  const descricao = document.getElementById("descricao-categoria");
+  const lista = document.getElementById("lista-modelos");
+  const aviso = document.getElementById("aviso-modelos");
+
+  function exibirAviso(mensagem) {
+    aviso.hidden = false;
+    aviso.textContent = mensagem;
+  }
+
+  function criarCard(nomeModelo, caminhoFoto, unidades) {
+    const card = document.createElement("article");
+    card.className = "modelo-card";
+
+    const foto = document.createElement("img");
+    foto.className = "foto-modelo";
+    foto.alt = "Foto ilustrativa do " + nomeModelo;
+    foto.loading = "lazy";
+    const fotoIndisponivel = document.createElement("div");
+    fotoIndisponivel.className = "foto-indisponivel";
+    fotoIndisponivel.textContent = "Foto indisponível: " + nomeModelo;
+    if (caminhoFoto) {
+      foto.src = caminhoFoto;
+      foto.onerror = () => {
+        foto.style.display = "none";
+        fotoIndisponivel.style.display = "flex";
+      };
+    } else {
+      foto.style.display = "none";
+      fotoIndisponivel.style.display = "flex";
+    }
+
+    const conteudo = document.createElement("div");
+    conteudo.className = "conteudo-card";
+    const nome = document.createElement("h3");
+    nome.textContent = nomeModelo;
+    const etiqueta = document.createElement("span");
+    etiqueta.className = "quantidade";
+    etiqueta.textContent = unidades.length + " veículos na frota";
+
+    const informacoes = document.createElement("ul");
+    informacoes.className = "informacoes";
+    [
+      "Categoria: " + categoria.nome,
+      "Modelo: " + nomeModelo,
+      "Cor: conforme estoque",
+      "Disponibilidade: consultar na reserva"
+    ].forEach(texto => {
+      const item = document.createElement("li");
+      item.textContent = texto;
+      informacoes.appendChild(item);
+    });
+
+    const preco = document.createElement("div");
+    preco.className = "preco";
+    const precoLabel = document.createElement("span");
+    precoLabel.className = "preco-label";
+    precoLabel.textContent = "A partir de";
+    const precoValor = document.createElement("div");
+    precoValor.className = "preco-valor";
+    const precos = unidades.map(obterPreco).filter(valor => valor > 0);
+    if (precos.length) {
+      precoValor.textContent = formatarMoeda(Math.min(...precos));
+      const sufixo = document.createElement("small");
+      sufixo.textContent = " /dia";
+      precoValor.appendChild(sufixo);
+    } else {
+      precoLabel.textContent = "Valor da locação";
+      precoValor.classList.add("preco-consulta");
+      precoValor.textContent = "Consulte a diária";
+    }
+    preco.append(precoLabel, precoValor);
+
+    const botao = document.createElement("a");
+    botao.className = "botao";
+    botao.textContent = "Ver detalhes e reservar →";
+    botao.href = "detalhes.html?" + new URLSearchParams({
+      categoria: categoriaSelecionada,
+      modelo: nomeModelo
+    }).toString();
+    if (unidades.length === 0) {
+      botao.textContent = "Sem unidades cadastradas";
+      botao.removeAttribute("href");
+      botao.style.background = "#687B8C";
+      botao.style.cursor = "default";
+    }
+    conteudo.append(nome, etiqueta, informacoes, preco, botao);
+    card.append(foto, fotoIndisponivel, conteudo);
+    return card;
+  }
+
+  async function carregarModelos() {
+    if (!categoria) {
+      titulo.textContent = "Categoria não encontrada";
+      descricao.textContent = "Selecione uma categoria válida.";
+      exibirAviso("Volte à página de veículos para escolher uma categoria.");
+      return;
+    }
+    document.title = categoria.nome + " | MOVELZA";
+    titulo.innerHTML = "Categoria <span></span>";
+    titulo.querySelector("span").textContent = categoria.nome;
+    descricao.textContent = "Carregando os modelos do banco de dados...";
+
+    try {
+      const resposta = await fetch("http://localhost:8080/api/veiculos");
+      if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+      const veiculos = await resposta.json();
+      if (!Array.isArray(veiculos)) throw new Error("Resposta inesperada da API");
+
+      const daCategoria = veiculos.filter(v =>
+        normalizar(v.categoria) === normalizar(categoriaSelecionada)
+      );
+      descricao.textContent = "Conheça nossos modelos. " + daCategoria.length +
+        " veículos cadastrados nesta categoria.";
+      lista.replaceChildren();
+      aviso.hidden = true;
+
+      const correspondidos = new Set();
+      categoria.modelos.forEach(([nome, quantidadeCatalogo, foto]) => {
+        const unidades = daCategoria.filter(v => mesmoModelo(v.modelo, nome));
+        unidades.forEach(v => correspondidos.add(v.id));
+        lista.appendChild(criarCard(nome, foto, unidades));
+      });
+
+      // Exibe também modelos do banco que não existem no catálogo visual,
+      // evitando ocultar veículos devido a diferenças de nomenclatura.
+      const extras = new Map();
+      daCategoria.filter(v => !correspondidos.has(v.id)).forEach(v => {
+        const nome = String(v.modelo || "Modelo não informado");
+        if (!extras.has(nome)) extras.set(nome, []);
+        extras.get(nome).push(v);
+      });
+      extras.forEach((unidades, nome) => lista.appendChild(criarCard(nome, "", unidades)));
+      console.log("MOVELZA: modelos carregados do MySQL", {
+        categoria: categoriaSelecionada,
+        quantidade: daCategoria.length,
+        modelosSemFotoCadastrada: [...extras.keys()]
+      });
+      if (daCategoria.length === 0) exibirAviso("Nenhum veículo cadastrado nesta categoria no MySQL.");
+    } catch (erro) {
+      descricao.textContent = "Não foi possível consultar os modelos.";
+      lista.replaceChildren();
+      exibirAviso("Não foi possível conectar ao MySQL pela API. Verifique se o backend está funcionando e atualize a página.");
+      console.error("MOVELZA: falha ao carregar modelos", erro);
+    }
+  }
+
+  carregarModelos();
+</script>
+
+</body>
+</html>

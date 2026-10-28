@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Veículos | MOVELZA</title>
+
+  <style>
+    :root {
+      --vermelho: #C8102E;
+      --vermelho-hover: #A80D26;
+      --vermelho-claro: #FF6479;
+      --grafite: #171A20;
+      --texto: #1D3040;
+      --cinza: #687B8C;
+      --fundo: #F5F7FA;
+      --borda: #E0E6ED;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    /* CABEÇALHO */
+
+    header {
+      background: #FFFFFF;
+      box-shadow: 0 2px 18px rgba(16, 36, 58, 0.07);
+    }
+
+    .cabecalho {
+      min-height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      display: none;
+      color: var(--vermelho);
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--texto);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 0;
+      border-radius: 10px;
+    }
+
+    nav a:hover,
+    nav a.ativo {
+      color: var(--vermelho);
+    }
+
+    nav a.nav-destaque {
+      background: var(--vermelho);
+      color: #FFFFFF;
+      padding: 14px 20px;
+    }
+
+    nav a.nav-destaque:hover {
+      background: var(--vermelho-hover);
+      color: #FFFFFF;
+    }
+
+    /* MENU COMPACTO PARA CELULAR */
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--borda);
+      background: #FFFFFF;
+      color: var(--vermelho);
+      border-radius: 11px;
+      padding: 11px 14px;
+      font: 700 14px Arial, Helvetica, sans-serif;
+      cursor: pointer;
+    }
+    .menu-icone { display: flex; flex-direction: column; gap: 4px; width: 19px; }
+    .menu-icone span { display: block; height: 2px; width: 100%; background: var(--vermelho); border-radius: 2px; }
+
+    /* BANNER */
+
+    .banner {
+      background: linear-gradient(
+        115deg,
+        #14171D 0%,
+        #29242B 52%,
+        #831126 100%
+      );
+      color: #FFFFFF;
+      padding: 65px 0;
+    }
+
+    .banner-conteudo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 35px;
+    }
+
+    .banner-texto {
+      max-width: 750px;
+    }
+
+    .banner-etiqueta {
+      display: block;
+      color: #FF9AA9;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    .banner h1 {
+      font-size: clamp(36px, 5vw, 57px);
+      line-height: 1.1;
+      margin: 0 0 18px;
+      letter-spacing: -1px;
+    }
+
+    .banner h1 span {
+      color: var(--vermelho-claro);
+    }
+
+    .banner p {
+      color: #E8DDE0;
+      font-size: 18px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .banner-numero {
+      min-width: 175px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .banner-numero strong {
+      display: block;
+      font-size: 52px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .banner-numero span {
+      font-size: 13px;
+      color: #E8DDE0;
+    }
+
+    /* CONTEÚDO */
+
+    .categorias {
+      padding: 65px 0 85px;
+    }
+
+    .titulo-secao {
+      margin-bottom: 30px;
+    }
+
+    .titulo-secao h2 {
+      color: var(--grafite);
+      font-size: 31px;
+      margin: 0 0 10px;
+    }
+
+    .titulo-secao p {
+      color: var(--cinza);
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* CARDS DAS CATEGORIAS */
+
+    .grid-categorias {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .card-categoria {
+      display: flex;
+      flex-direction: column;
+      background: #FFFFFF;
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card-categoria:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(60, 20, 30, 0.12);
+    }
+
+    .foto-categoria {
+      display: block;
+      width: 100%;
+      height: 215px;
+      object-fit: cover;
+      background: #EEF1F5;
+    }
+
+    .conteudo-card {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 24px;
+    }
+
+    .categoria-topo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .categoria-topo h3 {
+      font-size: 22px;
+      color: var(--grafite);
+      margin: 0;
+    }
+
+    .quantidade {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFF0F2;
+      color: var(--vermelho);
+      border-radius: 30px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .descricao {
+      color: var(--cinza);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0 0 22px;
+      min-height: 48px;
+    }
+
+    .botao-categoria {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: auto;
+      padding: 14px 18px;
+      background: var(--vermelho);
+      color: #FFFFFF;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .botao-categoria:hover {
+      background: var(--vermelho-hover);
+    }
+
+    /* CHAMADA FINAL */
+
+    .chamada {
+      margin-bottom: 80px;
+      background: linear-gradient(100deg, #181B22, #811329);
+      border-radius: 20px;
+      padding: 38px 42px;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .chamada h2 {
+      font-size: 26px;
+      margin: 0 0 10px;
+    }
+
+    .chamada p {
+      color: #E8D9DF;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .botao-claro {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      color: var(--vermelho);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 15px 22px;
+      border-radius: 11px;
+      white-space: nowrap;
+    }
+
+    .botao-claro:hover {
+      background: #FFF0F2;
+    }
+
+    /* RODAPÉ */
+
+    footer {
+      background: var(--grafite);
+      color: #E8F2FC;
+      padding: 45px 0 20px;
+    }
+
+    .rodape {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .rodape strong {
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .rodape p {
+      color: #B5C0CB;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .copyright {
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      color: #9FAAB7;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* RESPONSIVIDADE */
+
+    @media (max-width: 1050px) {
+      .grid-categorias {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 750px) {
+      .cabecalho {
+        min-height: 76px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 9px 0;
+      }
+      .logo img { width: 165px; height: 58px; }
+      .logo-fallback { font-size: 25px; }
+      .menu-toggle { display: inline-flex; }
+      nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        padding: 12px 0 5px;
+        border-top: 1px solid var(--borda);
+        margin-top: 9px;
+      }
+      nav.aberto { display: flex; }
+      nav a {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 14px 15px;
+        font-size: 15px;
+        border-radius: 9px;
+      }
+      nav a.nav-destaque { justify-content: center; margin-top: 5px; }
+      .banner {
+        padding: 50px 0;
+      }
+
+      .banner-conteudo {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .banner-numero {
+        width: 100%;
+      }
+
+      .categorias {
+        padding: 50px 0;
+      }
+
+      .titulo-secao h2 {
+        font-size: 26px;
+      }
+
+      .grid-categorias {
+        grid-template-columns: 1fr;
+      }
+
+      .foto-categoria {
+        height: 230px;
+      }
+
+      .descricao {
+        min-height: auto;
+      }
+
+      .chamada {
+        padding: 28px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .rodape {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .rodape {
+        grid-template-columns: 1fr;
+      }
+
+      .foto-categoria {
+        height: 190px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- CABEÇALHO -->
+
+<header>
+  <div class="container cabecalho">
+
+    <a class="logo" href="index.html">
+      <img
+        src="img/logo-MOVELZA.png"
+        alt="MOVELZA - Locadora de Veículos"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+      >
+      <span class="logo-fallback">MOVELZA</span>
+    </a>
+
+    <button type="button" class="menu-toggle" id="menu-toggle"
+            aria-label="Abrir menu de navegação" aria-controls="menu-principal"
+            aria-expanded="false">
+      <span class="menu-icone" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span id="menu-texto">Menu</span>
+    </button>
+
+    <nav id="menu-principal" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="veiculos.html" class="ativo">Veículos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="#categorias" class="nav-destaque">
+        Escolher veículo →
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+  <!-- BANNER -->
+
+  <section class="banner">
+
+    <div class="container banner-conteudo">
+
+      <div class="banner-texto">
+
+        <span class="banner-etiqueta">
+          MOVELZA • NOSSA FROTA
+        </span>
+
+        <h1>
+          Encontre o veículo <span>ideal.</span>
+        </h1>
+
+        <p>
+          Escolha entre nossas 10 categorias.
+          Temos opções para o dia a dia, viagens,
+          trabalho e experiências especiais.
+        </p>
+
+      </div>
+
+      <div class="banner-numero">
+        <strong>10</strong>
+        <span>Categorias para você escolher</span>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CATEGORIAS -->
+
+  <section class="categorias container" id="categorias">
+
+    <div class="titulo-secao">
+      <h2>Explore nossas categorias</h2>
+      <p>
+        Conheça as opções da MOVELZA e escolha
+        a categoria que combina com seu destino.
+      </p>
+    </div>
+
+    <div class="grid-categorias">
+
+      <!-- ECONÔMICO -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/economico/fiat-mobi.png"
+          alt="Fiat Mobi"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Econômico</h3>
+            <span class="quantidade" id="quantidade-economico">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Economia e praticidade para deslocamentos
+            urbanos e viagens do dia a dia.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=economico">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- HATCH -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/hatch/volkswagen-polo.png"
+          alt="Volkswagen Polo"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Hatch</h3>
+            <span class="quantidade">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Modelos versáteis e confortáveis,
+            ideais para cidade e estrada.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=hatch">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- SEDAN -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/sedan/volkswagen-virtus.png"
+          alt="Volkswagen Virtus"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Sedan</h3>
+            <span class="quantidade">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Mais espaço para bagagens e conforto
+            para viagens e compromissos.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=sedan">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- SUV -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/suv/t-cross.png"
+          alt="Volkswagen T-Cross"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>SUV</h3>
+            <span class="quantidade">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Espaço, versatilidade e uma posição
+            de dirigir mais elevada.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=suv">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- 7 LUGARES -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/7lugares/toyota-sw4.png"
+          alt="Toyota SW4"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>7 Lugares</h3>
+            <span class="quantidade">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Mais lugares para viajar com a família
+            ou com um grupo de passageiros.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=7lugares">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- PICAPES -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/picapes/fiat-strada.png"
+          alt="Fiat Strada"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Picapes</h3>
+            <span class="quantidade">30 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Versatilidade para atividades
+            profissionais, transporte e lazer.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=picapes">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- UTILITÁRIOS -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/utilitarios/fiorino.png"
+          alt="Fiat Fiorino"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Utilitários</h3>
+            <span class="quantidade">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Soluções práticas para entregas,
+            serviços e transporte de mercadorias.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=utilitarios">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- VANS -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/vans/renault-master.png"
+          alt="Renault Master"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Vans</h3>
+            <span class="quantidade">10 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Opções para transporte de passageiros,
+            grupos e diferentes necessidades.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=vans">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- PREMIUM -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/premium/bmw-320i.png"
+          alt="BMW 320i"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Premium</h3>
+            <span class="quantidade">20 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Sofisticação, tecnologia e conforto
+            para experiências diferenciadas.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=premium">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+      <!-- ELÉTRICOS -->
+
+      <article class="card-categoria">
+        <img
+          src="img/modelos/eletricos/byd-dolphin.png"
+          alt="BYD Dolphin"
+          class="foto-categoria"
+        >
+
+        <div class="conteudo-card">
+          <div class="categoria-topo">
+            <h3>Elétricos BYD</h3>
+            <span class="quantidade">40 veículos</span>
+          </div>
+
+          <p class="descricao">
+            Tecnologia e eficiência com modelos
+            elétricos e híbridos da linha BYD.
+          </p>
+
+          <a class="botao-categoria"
+             href="modelos.html?categoria=eletricos">
+            Ver modelos →
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- CHAMADA FINAL -->
+
+  <div class="container">
+
+    <section class="chamada">
+
+      <div>
+        <h2>Pronto para ir mais longe?</h2>
+        <p>
+          Escolha uma categoria, compare os modelos
+          e faça sua solicitação de reserva.
+        </p>
+      </div>
+
+      <a class="botao-claro" href="#categorias">
+        Escolher categoria →
+      </a>
+
+    </section>
+
+  </div>
+
+</main>
+
+<!-- RODAPÉ -->
+
+<footer>
+
+  <div class="container">
+
+    <div class="rodape">
+
+      <div>
+        <strong>🚘 MOVELZA</strong>
+        <p>
+          Liberdade para ir mais longe, com opções
+          para diferentes necessidades.
+        </p>
+      </div>
+
+      <div>
+        <strong>🛡 Proteção</strong>
+        <p>
+          Consulte as condições de proteção
+          aplicáveis à locação.
+        </p>
+      </div>
+
+      <div>
+        <strong>📅 Reserva</strong>
+        <p>
+          Escolha seu veículo e envie uma
+          solicitação de reserva online.
+        </p>
+      </div>
+
+      <div>
+        <strong>🎧 Atendimento</strong>
+        <p>
+          Informações de contato e locais de retirada
+          serão disponibilizados pela locadora.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 MOVELZA • Projeto demonstrativo de locação de veículos.
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+<script>
+  // Menu compacto: abre e fecha no celular.
+  (function () {
+    const botao = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-principal");
+    const texto = document.getElementById("menu-texto");
+    if (!botao || !menu) return;
+
+    function definirMenuAberto(aberto) {
+      menu.classList.toggle("aberto", aberto);
+      botao.setAttribute("aria-expanded", String(aberto));
+      botao.setAttribute("aria-label", aberto ? "Fechar menu de navegação" : "Abrir menu de navegação");
+      if (texto) texto.textContent = aberto ? "Fechar" : "Menu";
+    }
+    botao.addEventListener("click", () => definirMenuAberto(botao.getAttribute("aria-expanded") !== "true"));
+    menu.querySelectorAll("a").forEach(link => link.addEventListener("click", () => definirMenuAberto(false)));
+    document.addEventListener("keydown", evento => {
+      if (evento.key === "Escape") definirMenuAberto(false);
+    });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 750) definirMenuAberto(false);
+    });
+  })();
+
+  // Quantidades das categorias carregadas diretamente da API MOVELZA.
+  async function atualizarQuantidadesCategorias() {
+    const categorias = [
+      "economico", "hatch", "sedan", "suv", "7lugares",
+      "picapes", "utilitarios", "vans", "premium", "eletricos"
+    ];
+
+    const normalizar = (texto) => String(texto ?? "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+
+    const contadores = new Map();
+    document.querySelectorAll(".card-categoria").forEach((card) => {
+      const link = card.querySelector('a.botao-categoria[href*="categoria="]');
+      const quantidade = card.querySelector(".quantidade");
+      if (!link || !quantidade) return;
+      const categoria = new URL(link.href, window.location.href).searchParams.get("categoria");
+      if (categoria) contadores.set(normalizar(categoria), quantidade);
+    });
+
+    try {
+      const resposta = await fetch("http://localhost:8080/api/veiculos");
+      if (!resposta.ok) throw new Error(`API retornou HTTP ${resposta.status}`);
+
+      const veiculos = await resposta.json();
+      if (!Array.isArray(veiculos)) throw new Error("Resposta inesperada da API");
+
+      const totais = Object.fromEntries(categorias.map((categoria) => [categoria, 0]));
+      veiculos.forEach((veiculo) => {
+        const categoria = normalizar(veiculo.categoria);
+        if (Object.hasOwn(totais, categoria)) totais[categoria]++;
+      });
+
+      contadores.forEach((elemento, categoria) => {
+        if (Object.hasOwn(totais, categoria)) {
+          const total = totais[categoria];
+          elemento.textContent = `${total} ${total === 1 ? "veículo" : "veículos"}`;
+        }
+      });
+
+      console.log("MOVELZA: categorias atualizadas pelo MySQL", totais);
+    } catch (erro) {
+      console.error("MOVELZA: não foi possível atualizar as quantidades:", erro);
+      // Mantém os números originais da página quando a API estiver indisponível.
+    }
+  }
+
+  atualizarQuantidadesCategorias();
+</script>
+
+</body>
+</html>

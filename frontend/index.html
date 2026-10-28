@@ -1,0 +1,1423 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MOVELZA | Vá mais longe</title>
+
+  <style>
+    :root {
+      --vermelho: #C8102E;
+      --vermelho-hover: #A80D26;
+      --vermelho-claro: #FF6479;
+      --escuro: #142331;
+      --texto: #1d3040;
+      --cinza: #687b8c;
+      --fundo: #f5f7fa;
+      --borda: #e0e6ed;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: var(--fundo);
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    /* CABEÇALHO */
+
+    header {
+      background: white;
+      box-shadow: 0 2px 18px rgba(16, 36, 58, .07);
+      position: relative;
+      z-index: 20;
+    }
+
+    .cabecalho {
+      min-height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      display: none;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--vermelho);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--texto);
+      background: transparent;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 0;
+      border-radius: 10px;
+    }
+
+    nav a:hover,
+    nav a.ativo {
+      color: var(--vermelho);
+    }
+
+    nav a.nav-destaque {
+      background: var(--vermelho);
+      color: white;
+      padding: 14px 20px;
+    }
+
+    nav a.nav-destaque:hover {
+      background: var(--vermelho-hover);
+      color: white;
+    }
+
+    /* BOTÃO DO MENU MOBILE */
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid var(--borda);
+      background: white;
+      color: var(--vermelho);
+      border-radius: 11px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .menu-toggle:hover {
+      background: #fff0f2;
+    }
+
+    .menu-icone {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      width: 19px;
+      height: 19px;
+    }
+
+    .menu-icone span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--vermelho);
+      transition: transform .2s, opacity .2s;
+    }
+
+    .menu-toggle[aria-expanded="true"]
+    .menu-icone span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"]
+    .menu-icone span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"]
+    .menu-icone span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* BANNER PRINCIPAL */
+
+    .hero {
+      background: linear-gradient(
+        115deg,
+        #14171D 0%,
+        #29242B 52%,
+        #831126 100%
+      );
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero-conteudo {
+      min-height: 440px;
+      padding: 60px 0 85px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 35px;
+    }
+
+    .hero-texto {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: block;
+      color: #FF9AA9;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 6vw, 78px);
+      line-height: 1.04;
+      letter-spacing: -2px;
+      margin: 0 0 22px;
+    }
+
+    .hero h1 span {
+      color: var(--vermelho-claro);
+    }
+
+    .hero p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #e4dce0;
+      max-width: 540px;
+      margin: 0 0 30px;
+    }
+
+    .botao {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--vermelho);
+      color: white;
+      border-radius: 11px;
+      padding: 15px 22px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background .2s, transform .2s;
+    }
+
+    .botao:hover {
+      background: var(--vermelho-hover);
+      transform: translateY(-2px);
+    }
+
+    .botao-claro {
+      background: white;
+      color: var(--vermelho);
+    }
+
+    .botao-claro:hover {
+      background: #fff0f2;
+    }
+
+    /* CARRO DO BANNER */
+
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-width: 0;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 370px;
+      height: 370px;
+      max-width: 100%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .hero-carro {
+      width: 100%;
+      max-width: 510px;
+      height: 295px;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(
+        0 22px 24px rgba(0, 0, 0, .25)
+      );
+    }
+
+    .hero-legenda {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, .12);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .hero-legenda strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    /* BENEFÍCIOS */
+
+    .beneficios {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: -35px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .beneficio {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 9px 26px rgba(14, 52, 80, .08);
+    }
+
+    .beneficio .simbolo {
+      font-size: 29px;
+    }
+
+    .beneficio strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .beneficio p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--cinza);
+      margin: 0;
+    }
+
+    /* TÍTULOS DAS SEÇÕES */
+
+    .secao {
+      padding-top: 75px;
+    }
+
+    .titulo-secao {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 27px;
+    }
+
+    .titulo-secao h2 {
+      color: var(--escuro);
+      font-size: 30px;
+      margin: 0 0 9px;
+    }
+
+    .titulo-secao p {
+      color: var(--cinza);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .titulo-secao a {
+      color: var(--vermelho);
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* CATEGORIAS */
+
+    .grade-categorias {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .categoria {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 17px;
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--texto);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .categoria:hover,
+    .card-veiculo:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(60, 20, 30, .14);
+    }
+
+    .categoria-imagem {
+      width: 100%;
+      height: 175px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .categoria-imagem img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .categoria h3 {
+      margin: 0;
+      padding: 19px 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sem-imagem {
+      padding: 15px;
+      color: #8292a3;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* VEÍCULOS EM DESTAQUE */
+
+    .grade-veiculos {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card-veiculo {
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid var(--borda);
+      border-radius: 17px;
+      padding: 17px;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .destaque-foto {
+      display: block;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #f0f2f5;
+    }
+
+    .card-veiculo h3 {
+      font-size: 19px;
+      margin: 17px 0 7px;
+    }
+
+    .tipo {
+      color: var(--vermelho);
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0 0 14px;
+    }
+
+    .especificacoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .especificacoes span {
+      background: #f0f2f5;
+      color: #526a7c;
+      border-radius: 7px;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .card-rodape {
+      margin-top: auto;
+      border-top: 1px solid var(--borda);
+      padding-top: 15px;
+    }
+
+    .card-rodape small {
+      color: var(--cinza);
+      font-size: 12px;
+    }
+
+    .preco-destaque {
+      display: block;
+      color: var(--vermelho);
+      font-size: 21px;
+      margin: 6px 0 16px;
+    }
+
+    .card-rodape .botao {
+      display: flex;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    /* CHAMADA FINAL */
+
+    .chamada {
+      margin-top: 75px;
+      background: linear-gradient(
+        100deg,
+        #181b22,
+        #811329
+      );
+      border-radius: 20px;
+      padding: 38px 42px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .chamada h2 {
+      font-size: 27px;
+      margin: 0 0 10px;
+    }
+
+    .chamada p {
+      color: #e8d9df;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* RODAPÉ */
+
+    footer {
+      margin-top: 75px;
+      background: #171a20;
+      color: #e8f2fc;
+      padding: 45px 0 20px;
+    }
+
+    .rodape {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .rodape strong {
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .rodape p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #b5c0cb;
+      margin: 0;
+    }
+
+    .copyright {
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, .15);
+      color: #9faab7;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* RESPONSIVIDADE */
+
+    @media (max-width: 1050px) {
+      .grade-categorias {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grade-veiculos {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 750px) {
+      .container {
+        width: min(100% - 28px, 1200px);
+      }
+
+      /* CABEÇALHO COMPACTO */
+
+      .cabecalho {
+        min-height: 76px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding: 9px 0;
+      }
+
+      .logo img {
+        width: 165px;
+        height: 58px;
+      }
+
+      .logo-fallback {
+        font-size: 25px;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        padding: 12px 0 5px;
+        border-top: 1px solid var(--borda);
+        margin-top: 9px;
+      }
+
+      nav.aberto {
+        display: flex;
+      }
+
+      nav a {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        padding: 14px 15px;
+        font-size: 15px;
+        border-radius: 9px;
+      }
+
+      nav a:hover,
+      nav a.ativo {
+        background: #fff0f2;
+      }
+
+      nav a.nav-destaque {
+        justify-content: center;
+        margin-top: 5px;
+      }
+
+      /* BANNER MOBILE */
+
+      .hero-conteudo {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        padding: 42px 0 65px;
+        gap: 24px;
+      }
+
+      .hero h1 {
+        font-size: clamp(43px, 11vw, 53px);
+        letter-spacing: -1.5px;
+      }
+
+      .hero p {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .hero-visual::before {
+        width: 260px;
+        height: 260px;
+      }
+
+      .hero-carro {
+        height: 220px;
+      }
+
+      .beneficios {
+        grid-template-columns: 1fr;
+        margin-top: 18px;
+      }
+
+      .beneficio {
+        padding: 17px;
+      }
+
+      .secao {
+        padding-top: 50px;
+      }
+
+      .titulo-secao {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .titulo-secao h2 {
+        font-size: 25px;
+      }
+
+      .grade-categorias {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .categoria-imagem {
+        height: 145px;
+      }
+
+      .grade-veiculos {
+        grid-template-columns: 1fr;
+      }
+
+      .chamada {
+        padding: 28px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .rodape {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .logo img {
+        width: 150px;
+        height: 55px;
+      }
+
+      .menu-toggle {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+
+      .hero-conteudo {
+        padding-top: 38px;
+      }
+
+      .hero h1 {
+        font-size: 47px;
+      }
+
+      .hero-carro {
+        height: 195px;
+      }
+
+      .hero-legenda {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .categoria-imagem {
+        height: 115px;
+      }
+
+      .categoria h3 {
+        font-size: 14px;
+        padding: 15px 8px;
+      }
+
+      .rodape {
+        grid-template-columns: 1fr;
+      }
+
+      .chamada {
+        padding: 25px 20px;
+      }
+
+      .chamada h2 {
+        font-size: 24px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- CABEÇALHO -->
+
+<header>
+  <div class="container cabecalho">
+
+    <a class="logo" href="index.html">
+      <img
+        src="img/logo-MOVELZA.png"
+        alt="MOVELZA - Locadora de Veículos"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+      >
+      <span class="logo-fallback">MOVELZA</span>
+    </a>
+
+    <!-- BOTÃO DO MENU NO CELULAR -->
+
+    <button
+      type="button"
+      class="menu-toggle"
+      id="menu-toggle"
+      aria-label="Abrir menu de navegação"
+      aria-controls="menu-principal"
+      aria-expanded="false"
+    >
+        <span class="menu-icone" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      <span id="menu-texto">Menu</span>
+    </button>
+
+    <!-- NAVEGAÇÃO -->
+
+    <nav id="menu-principal" aria-label="Navegação principal">
+      <a href="index.html" class="ativo">Início</a>
+      <a href="veiculos.html">Veículos</a>
+      <a href="#sobre">Sobre nós</a>
+      <a href="#contato">Contato</a>
+      <a href="veiculos.html" class="nav-destaque">
+        Escolher veículo →
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+  <!-- BANNER -->
+
+  <section class="hero">
+    <div class="container hero-conteudo">
+
+      <div class="hero-texto">
+
+          <span class="eyebrow">
+            MOVELZA • LOCADORA DE VEÍCULOS
+          </span>
+
+        <h1>Vá mais <span>longe.</span></h1>
+
+        <p>
+          Encontre o carro ideal para cada destino.
+          Explore nossas categorias, compare modelos
+          e solicite sua reserva online.
+        </p>
+
+        <a class="botao botao-claro" href="veiculos.html">
+          Explorar veículos →
+        </a>
+
+      </div>
+
+      <div class="hero-visual">
+
+        <img
+          class="hero-carro"
+          src="img/modelos/suv/t-cross.png"
+          alt="Volkswagen T-Cross em destaque"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="hero-legenda">
+          <strong>Volkswagen T-Cross</strong>
+          Conheça nossa categoria SUV
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BENEFÍCIOS -->
+
+  <div class="container beneficios">
+
+    <div class="beneficio">
+      <span class="simbolo">🚘</span>
+      <div>
+        <strong>Variedade de veículos</strong>
+        <p>Opções para o dia a dia, viagens e trabalho.</p>
+      </div>
+    </div>
+
+    <div class="beneficio">
+      <span class="simbolo">📅</span>
+      <div>
+        <strong>Solicitação online</strong>
+        <p>Escolha datas e consulte o valor da locação.</p>
+      </div>
+    </div>
+
+    <div class="beneficio">
+      <span class="simbolo">🔎</span>
+      <div>
+        <strong>Informações claras</strong>
+        <p>Confira características e preços por modelo.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CATEGORIAS -->
+
+  <section class="secao container" id="categorias">
+
+    <div class="titulo-secao">
+      <div>
+        <h2>Escolha sua categoria</h2>
+        <p>Do econômico ao premium: encontre a opção ideal.</p>
+      </div>
+
+      <a href="veiculos.html">Ver todas →</a>
+    </div>
+
+    <div class="grade-categorias">
+
+      <a class="categoria" href="modelos.html?categoria=economico">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/economico/fiat-mobi.png"
+            alt="Fiat Mobi"
+          >
+        </div>
+        <h3>Econômico</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=hatch">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/hatch/volkswagen-polo.png"
+            alt="Volkswagen Polo"
+          >
+        </div>
+        <h3>Hatch</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=sedan">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/sedan/volkswagen-virtus.png"
+            alt="Volkswagen Virtus"
+          >
+        </div>
+        <h3>Sedan</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=suv">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/suv/t-cross.png"
+            alt="Volkswagen T-Cross"
+          >
+        </div>
+        <h3>SUV</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=7lugares">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/7lugares/toyota-sw4.png"
+            alt="Toyota SW4"
+          >
+        </div>
+        <h3>7 Lugares</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=picapes">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/picapes/fiat-strada.png"
+            alt="Fiat Strada"
+          >
+        </div>
+        <h3>Picapes</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=utilitarios">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/utilitarios/fiorino.png"
+            alt="Fiat Fiorino"
+          >
+        </div>
+        <h3>Utilitários</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=vans">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/vans/renault-master.png"
+            alt="Renault Master"
+          >
+        </div>
+        <h3>Vans</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=premium">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/premium/bmw-320i.png"
+            alt="BMW 320i"
+          >
+        </div>
+        <h3>Premium</h3>
+      </a>
+
+      <a class="categoria" href="modelos.html?categoria=eletricos">
+        <div class="categoria-imagem">
+          <img
+            src="img/modelos/eletricos/byd-dolphin.png"
+            alt="BYD Dolphin"
+          >
+        </div>
+        <h3>Elétricos</h3>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- VEÍCULOS EM DESTAQUE -->
+
+  <section class="secao container" id="destaques">
+
+    <div class="titulo-secao">
+      <div>
+        <h2>Veículos em destaque</h2>
+        <p>Conheça alguns modelos da frota MOVELZA.</p>
+      </div>
+
+      <a href="veiculos.html">Ver todos →</a>
+    </div>
+
+    <div class="grade-veiculos">
+
+      <!-- FIAT MOBI -->
+
+      <article class="card-veiculo">
+
+        <img
+          class="destaque-foto"
+          src="img/modelos/economico/fiat-mobi.png"
+          alt="Fiat Mobi"
+        >
+
+        <h3>Fiat Mobi</h3>
+        <p class="tipo">Econômico</p>
+
+        <div class="especificacoes">
+          <span>⛽ Flex</span>
+          <span>👤 5 lugares</span>
+        </div>
+
+        <div class="card-rodape">
+          <small>A partir de</small>
+
+          <strong class="preco-destaque" id="preco-mobi">
+            Consultando preço...
+          </strong>
+
+          <a
+            class="botao"
+            href="detalhes.html?categoria=economico&amp;modelo=Fiat%20Mobi"
+          >
+            Ver detalhes →
+          </a>
+        </div>
+
+      </article>
+
+      <!-- HYUNDAI HB20 -->
+
+      <article class="card-veiculo">
+
+        <img
+          class="destaque-foto"
+          src="img/modelos/hatch/hyundai-hb20.png"
+          alt="Hyundai HB20"
+        >
+
+        <h3>Hyundai HB20</h3>
+        <p class="tipo">Hatch</p>
+
+        <div class="especificacoes">
+          <span>⛽ Flex</span>
+          <span>👤 5 lugares</span>
+        </div>
+
+        <div class="card-rodape">
+          <small>A partir de</small>
+
+          <strong class="preco-destaque" id="preco-hb20">
+            Consultando preço...
+          </strong>
+
+          <a
+            class="botao"
+            href="detalhes.html?categoria=hatch&amp;modelo=Hyundai%20HB20"
+          >
+            Ver detalhes →
+          </a>
+        </div>
+
+      </article>
+
+      <!-- VOLKSWAGEN T-CROSS -->
+
+      <article class="card-veiculo">
+
+        <img
+          class="destaque-foto"
+          src="img/modelos/suv/t-cross.png"
+          alt="Volkswagen T-Cross"
+        >
+
+        <h3>Volkswagen T-Cross</h3>
+        <p class="tipo">SUV</p>
+
+        <div class="especificacoes">
+          <span>⛽ Flex</span>
+          <span>👤 5 lugares</span>
+        </div>
+
+        <div class="card-rodape">
+          <small>A partir de</small>
+
+          <strong class="preco-destaque" id="preco-tcross">
+            Consultando preço...
+          </strong>
+
+          <a
+            class="botao"
+            href="detalhes.html?categoria=suv&amp;modelo=Volkswagen%20T-Cross"
+          >
+            Ver detalhes →
+          </a>
+        </div>
+
+      </article>
+
+      <!-- BYD DOLPHIN -->
+
+      <article class="card-veiculo">
+
+        <img
+          class="destaque-foto"
+          src="img/modelos/eletricos/byd-dolphin.png"
+          alt="BYD Dolphin"
+        >
+
+        <h3>BYD Dolphin</h3>
+        <p class="tipo">Elétricos</p>
+
+        <div class="especificacoes">
+          <span>⚡ Elétrico</span>
+          <span>👤 5 lugares</span>
+        </div>
+
+        <div class="card-rodape">
+          <small>A partir de</small>
+
+          <strong class="preco-destaque" id="preco-dolphin">
+            Consultando preço...
+          </strong>
+
+          <a
+            class="botao"
+            href="detalhes.html?categoria=eletricos&amp;modelo=BYD%20Dolphin"
+          >
+            Ver detalhes →
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CHAMADA FINAL -->
+
+  <div class="container">
+
+    <section class="chamada">
+
+      <div>
+        <h2>Seu próximo destino começa aqui.</h2>
+        <p>
+          Explore os modelos disponíveis e simule sua locação.
+        </p>
+      </div>
+
+      <a class="botao botao-claro" href="veiculos.html">
+        Encontrar meu carro →
+      </a>
+
+    </section>
+
+  </div>
+
+</main>
+
+<!-- RODAPÉ -->
+
+<footer id="sobre">
+
+  <div class="container">
+
+    <div class="rodape">
+
+      <div>
+        <strong>🚘 MOVELZA</strong>
+        <p>
+          Liberdade para ir mais longe, com opções
+          para diferentes necessidades.
+        </p>
+      </div>
+
+      <div>
+        <strong>🛡 Proteção</strong>
+        <p>
+          Consulte as condições de proteção
+          aplicáveis à locação.
+        </p>
+      </div>
+
+      <div>
+        <strong>📅 Reserva</strong>
+        <p>
+          Faça uma simulação e envie sua
+          solicitação online.
+        </p>
+      </div>
+
+      <div id="contato">
+        <strong>🎧 Atendimento</strong>
+        <p>
+          Informações de contato e locais de retirada
+          serão disponibilizados pela locadora.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 MOVELZA • Projeto demonstrativo de locação de veículos.
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- ESTOQUE -->
+
+<script src="estoque.js"></script>
+
+<script>
+  (function () {
+    "use strict";
+
+    /* MENU MOBILE */
+
+    const botaoMenu = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu-principal");
+    const textoMenu = document.getElementById("menu-texto");
+
+    function definirMenuAberto(aberto) {
+      if (!botaoMenu || !menu) return;
+
+      menu.classList.toggle("aberto", aberto);
+
+      botaoMenu.setAttribute(
+        "aria-expanded",
+        String(aberto)
+      );
+
+      botaoMenu.setAttribute(
+        "aria-label",
+        aberto
+          ? "Fechar menu de navegação"
+          : "Abrir menu de navegação"
+      );
+
+      if (textoMenu) {
+        textoMenu.textContent = aberto ? "Fechar" : "Menu";
+      }
+    }
+
+    if (botaoMenu && menu) {
+      botaoMenu.addEventListener("click", function () {
+        const aberto = botaoMenu.getAttribute(
+          "aria-expanded"
+        ) === "true";
+
+        definirMenuAberto(!aberto);
+      });
+
+      menu.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          definirMenuAberto(false);
+        });
+      });
+
+      document.addEventListener("keydown", function (evento) {
+        if (evento.key === "Escape") {
+          definirMenuAberto(false);
+        }
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 750) {
+          definirMenuAberto(false);
+        }
+      });
+    }
+
+    /* PREÇOS DOS VEÍCULOS EM DESTAQUE - MYSQL */
+
+    const API_VEICULOS = "http://localhost:8080/api/veiculos";
+
+    const formatarMoeda = valor =>
+      Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+
+    const destaques = [
+      ["preco-mobi", "economico", "Fiat Mobi"],
+      ["preco-hb20", "hatch", "Hyundai HB20"],
+      ["preco-tcross", "suv", "Volkswagen T-Cross"],
+      ["preco-dolphin", "eletricos", "BYD Dolphin"]
+    ];
+
+    function normalizar(texto) {
+      return String(texto ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+    }
+
+    async function carregarPrecosDestaques() {
+      try {
+        const resposta = await fetch(API_VEICULOS, {
+          headers: { "Accept": "application/json" },
+          cache: "no-store"
+        });
+
+        if (!resposta.ok) {
+          throw new Error("Falha na consulta: HTTP " + resposta.status);
+        }
+
+        const veiculos = await resposta.json();
+        if (!Array.isArray(veiculos)) {
+          throw new Error("Resposta inesperada da API de veículos.");
+        }
+
+        for (const [id, categoria, modelo] of destaques) {
+          const elemento = document.getElementById(id);
+          if (!elemento) continue;
+
+          const precos = veiculos
+            .filter(v =>
+              normalizar(v.categoria) === normalizar(categoria) &&
+              normalizar(v.modelo) === normalizar(modelo) &&
+              normalizar(v.status) === "disponivel"
+            )
+            .map(v => Number(v.valorDiaria))
+            .filter(valor => Number.isFinite(valor) && valor > 0);
+
+          elemento.textContent = precos.length
+            ? formatarMoeda(Math.min(...precos)) + " / dia"
+            : "Preço sob consulta";
+        }
+      } catch (erro) {
+        console.error("MOVELZA: não foi possível consultar os preços no MySQL.", erro);
+        for (const [id] of destaques) {
+          const elemento = document.getElementById(id);
+          if (elemento) elemento.textContent = "Preço indisponível no momento";
+        }
+      }
+    }
+
+    carregarPrecosDestaques();
+
+    /* TRATAMENTO DE IMAGENS AUSENTES */
+
+    document.querySelectorAll(
+      ".categoria-imagem img, .destaque-foto"
+    ).forEach(img => {
+      img.addEventListener("error", function () {
+        if (img.closest(".categoria-imagem")) {
+          const aviso = document.createElement("span");
+
+          aviso.className = "sem-imagem";
+          aviso.textContent = "Imagem em preparação";
+
+          img.replaceWith(aviso);
+        } else {
+          img.style.display = "none";
+        }
+      });
+    });
+
+  })();
+</script>
+
+</body>
+</html>

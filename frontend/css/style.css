@@ -1,0 +1,503 @@
+
+/* ========================================
+   MOVELZA - ESTILO PRINCIPAL
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --azul: #0787f9;
+  --azul-escuro: #006bd6;
+  --grafite: #101c29;
+  --cinza: #647180;
+  --cinza-claro: #f4f7fa;
+  --branco: #ffffff;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--branco);
+  color: var(--grafite);
+}
+
+.container {
+  width: 92%;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* ========================================
+   CABEÇALHO
+   ======================================== */
+
+header {
+  background: var(--branco);
+  border-bottom: 1px solid #e9edf2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.cabecalho {
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 230px;
+  height: auto;
+  display: block;
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--grafite);
+  font-weight: 600;
+  padding: 13px 22px;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+nav a:hover,
+nav a.ativo {
+  background: var(--azul);
+  color: var(--branco);
+}
+
+/* ========================================
+   BANNER PRINCIPAL
+   ======================================== */
+
+.hero {
+  min-height: 470px;
+  display: flex;
+  align-items: center;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,0.95) 28%,
+      rgba(255,255,255,0.45) 48%,
+      rgba(255,255,255,0) 65%
+    ),
+    url("../img/banner-tcross.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-conteudo {
+  display: flex;
+  align-items: center;
+}
+
+.hero-texto {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 76px;
+  line-height: 0.95;
+  font-weight: 900;
+  margin-bottom: 25px;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--azul);
+}
+
+.hero p {
+  font-size: 23px;
+  line-height: 1.4;
+  color: #394655;
+  max-width: 480px;
+  margin-bottom: 30px;
+}
+
+.botao {
+  display: inline-block;
+  text-decoration: none;
+  background: var(--azul);
+  color: var(--branco);
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.botao:hover {
+  background: var(--azul-escuro);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   TÍTULOS
+   ======================================== */
+
+.titulo-secao {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.titulo-secao h2 {
+  font-size: 34px;
+  margin-bottom: 5px;
+}
+
+.titulo-secao p {
+  color: var(--cinza);
+  font-size: 18px;
+}
+
+.titulo-secao > a {
+  text-decoration: none;
+  color: var(--azul);
+  font-weight: 700;
+}
+
+/* ========================================
+   CATEGORIAS DA PÁGINA INICIAL
+   ======================================== */
+
+.categorias {
+  padding: 50px 0;
+}
+
+.grade-categorias {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.categoria {
+  height: 145px;
+  background: var(--cinza-claro);
+  border: 1px solid #edf0f4;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.categoria:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(20,40,60,0.10);
+  border-color: #d7e7f7;
+}
+
+.categoria h3 {
+  font-size: 19px;
+}
+
+/* ========================================
+   VEÍCULOS EM DESTAQUE
+   ======================================== */
+
+.destaques {
+  padding: 35px 0 55px;
+}
+
+.grade-veiculos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card-veiculo {
+  border: 1px solid #e6ebf0;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(20,40,60,0.06);
+  transition: 0.2s;
+}
+
+.card-veiculo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(20,40,60,0.12);
+}
+
+.card-veiculo h3 {
+  font-size: 25px;
+  margin-bottom: 4px;
+}
+
+.card-veiculo .tipo {
+  color: var(--cinza);
+  margin-bottom: 18px;
+}
+
+.card-veiculo p {
+  margin: 9px 0;
+}
+
+.card-veiculo span {
+  display: block;
+  margin-top: 22px;
+  font-size: 14px;
+}
+
+.card-veiculo strong {
+  display: block;
+  font-size: 24px;
+  margin: 4px 0 20px;
+}
+
+.card-veiculo .botao {
+  display: block;
+  text-align: center;
+}
+
+/* ========================================
+   PÁGINA DE VEÍCULOS - CATEGORIAS
+   ======================================== */
+
+.categorias > h1 {
+  font-size: 38px;
+  color: var(--grafite);
+  margin-bottom: 10px;
+}
+
+.categorias > p {
+  font-size: 18px;
+  color: var(--cinza);
+  margin-bottom: 35px;
+}
+
+.grid-categorias {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* Cards */
+
+.card-categoria {
+  min-width: 0;
+  background: var(--branco);
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 15px;
+  box-shadow: 0 5px 18px rgba(20,40,60,0.07);
+  transition: 0.25s ease;
+}
+
+.card-categoria:hover {
+  transform: translateY(-5px);
+  border-color: var(--azul);
+  box-shadow: 0 12px 28px rgba(20,40,60,0.14);
+}
+
+.card-com-foto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Fotos */
+
+.card-com-foto .foto-categoria {
+  display: block;
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 11px;
+}
+
+/* Nome da categoria */
+
+.card-com-foto h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--grafite);
+  margin-top: 17px;
+  margin-bottom: 8px;
+}
+
+/* Quantidade de veículos */
+
+.card-com-foto p {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cinza);
+  margin-bottom: 22px;
+}
+
+/* Botões azuis */
+
+.card-com-foto .botao-categoria {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  padding: 13px 12px;
+  background: var(--azul);
+  color: var(--branco);
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card-com-foto .botao-categoria:hover {
+  background: var(--azul-escuro);
+  transform: translateY(-2px);
+}
+
+.card-com-foto .botao-categoria:focus-visible {
+  outline: 3px solid var(--grafite);
+  outline-offset: 3px;
+}
+
+/* ========================================
+   RODAPÉ
+   ======================================== */
+
+footer {
+  background: var(--cinza-claro);
+  border-top: 1px solid #e5eaf0;
+}
+
+.rodape {
+  min-height: 150px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 30px;
+}
+
+.rodape > div {
+  padding: 20px;
+}
+
+.rodape strong {
+  font-size: 18px;
+}
+
+.rodape p {
+  margin-top: 7px;
+  color: var(--cinza);
+  line-height: 1.4;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 1100px) {
+  .grid-categorias {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .grade-categorias {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grade-veiculos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero h1 {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 700px) {
+  .cabecalho {
+    padding: 20px 0;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  nav a {
+    padding: 9px 12px;
+  }
+
+  .hero {
+    min-height: 400px;
+  }
+
+  .hero h1 {
+    font-size: 50px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .titulo-secao {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .grade-categorias,
+  .grid-categorias {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grade-veiculos,
+  .rodape {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo img {
+    width: 190px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .categorias > h1 {
+    font-size: 30px;
+  }
+
+  .grid-categorias {
+    grid-template-columns: 1fr;
+  }
+
+  .card-com-foto .foto-categoria {
+    height: 190px;
+  }
+}
